@@ -1,7 +1,11 @@
 import JobApplication from "./JobApplication";
 import Card from "./Card";
+import SideBar from "../utils/SideBar";
 export default function MainPage(){
     return (
+        <div class="layout">
+        <SideBar> </SideBar>
+      
         <div className="content-main">
             <div className="cards-main">
                 <Card title={"Applied"} count={32} icon_name={"smile"}></Card>
@@ -65,7 +69,7 @@ export default function MainPage(){
                 />
                 </div>
         </div>
-        
+        </div>
         
     );
 }
