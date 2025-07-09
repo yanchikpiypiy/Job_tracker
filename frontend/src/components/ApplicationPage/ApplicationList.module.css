@@ -52,7 +52,7 @@
 }
 .gridRow:not(.header):hover{ background:var(--color-sidebar-hover-bg); }
 
-/* helpers */
+/* helpers *
 .wrap  { word-break:break-word; }
 
 /* coloured status square */

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import styles from "./ApplicationList.module.css";
 import SideBar from "../utils/SideBar";
+import JobRow  from "./JobRow";
 
-/* ─── demo data grouped by status ─────────────────────────────────── */
+/* ─── grouped mock data (unchanged) ───────────────────────────────── */
 const mockGroups = [
   {
     status: "APPLIED",
@@ -90,9 +91,9 @@ export default function ApplicationsList() {
                 <span className={styles.count}>· {group.jobs.length} jobs</span>
               </header>
 
+              {/* grid header + rows */}
               {!collapsed[group.status] && (
                 <>
-                  {/* column labels */}
                   <div className={`${styles.gridRow} ${styles.header}`}>
                     <div />
                     <div>Name</div>
@@ -105,21 +106,14 @@ export default function ApplicationsList() {
                     <div>Status</div>
                   </div>
 
-                  {/* rows */}
                   {group.jobs.map(job => (
-                    <div key={job.id} className={styles.gridRow}>
-                      <div><span className={`${styles.square} ${group.square}`} /></div>
-                      <div className={styles.wrap}>{job.position}</div>
-                      <div className={styles.wrap}>{job.company}</div>
-                      <div className={styles.wrap}>{job.location}</div>
-                      <div>{job.type}</div>
-                      <div className={styles.right}>{job.date}</div>
-                      <div className={styles.right}>{job.salary}</div>
-                      <div />
-                      <div>
-                        <span className={`${styles.pill} ${group.pill}`}>{group.status}</span>
-                      </div>
-                    </div>
+                    <JobRow
+                      key={job.id}
+                      job={job}
+                      squareClass={group.square}
+                      pillClass={group.pill}
+                      statusText={group.status}
+                    />
                   ))}
                 </>
               )}
