@@ -177,10 +177,16 @@ input {
 
 .input_field {
   width: 100%;
-  max-width: 300px; /* or however wide you want */
+  max-width: 350px; /* or however wide you want */
 }
 
-
+.megaform{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    max-width: 300px;
+}
 .login_button{
     margin-top: 15px;
 }

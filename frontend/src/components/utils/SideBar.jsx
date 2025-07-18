@@ -1,5 +1,9 @@
 
 export default function SideBar(){
+
+    async function getUser(credentials) {
+        const response = await fetch("blabla")
+    }
     return (
         <aside className="sidebar-main">
             <div className="sidebar-top">

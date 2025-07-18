@@ -7,6 +7,14 @@ from rest_framework.decorators import action
 from .models import Application, User
 from .serializers import ApplicationSerializer, UserSerializer
 from rest_framework.permissions import IsAuthenticated
+
+
+from rest_framework_simplejwt.views import TokenObtainPairView
+from .serializers import EmailTokenObtainPairSerializer
+
+class EmailTokenObtainPairView(TokenObtainPairView):
+    serializer_class = EmailTokenObtainPairSerializer
+    
 class ApplicationApiView(viewsets.ModelViewSet):
     queryset = Application.objects.all()
     serializer_class = ApplicationSerializer
