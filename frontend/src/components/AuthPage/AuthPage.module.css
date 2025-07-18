@@ -1,0 +1,190 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.login h2,
+.signup h2 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+button {
+  border-radius: 20px;
+  border: 1px solid #FF4B2B;
+  background-color: #FF4B2B;
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 80ms ease-in;
+}
+
+button:hover{
+    transform: translateY(10%);
+}
+
+input {
+  background-color: #eee;
+  border: none;
+  padding: 12px 15px;
+  margin: 8px 0;
+  width: 100%;
+}
+
+.wrapper {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 840px;
+  height: 100vh;
+  flex-direction: column;
+  max-width: 100%;
+  min-height: 480px;
+  position: relative;
+  overflow: hidden;
+}
+
+.overlay-container {
+  position: absolute;
+  left: 50%;
+  width: 50%;
+  height: 50%;
+  transition: transform 0.6s ease-in-out;
+  z-index: 6;
+}
+
+.overlay-panel {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 0 40px;
+  height: 100%;
+  transition: transform 0.6s ease-in-out;
+  z-index: 1;
+}
+
+.overlay-right {
+  right: 0;
+  transition: transform 0.8s ease-in-out, opacity 0.6s ease-in-out;
+}
+
+.overlay-panel h1 {
+  margin-bottom: 40px;
+}
+
+.overlay-panel p {
+  margin-bottom: 30px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.overlay-left {
+  transform: translateX(-200%);
+  transition: transform 0.8s ease-in-out;
+}
+
+.overlay {
+  background: linear-gradient(to right, #FF4B2B, #FF416C);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 0 0;
+  height: 100%;
+  transition: transform 0.6s ease-in-out;
+  z-index: 10;
+  position: relative;
+}
+
+.container {
+  position: absolute;
+}
+
+.login,
+.signup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  padding: 10px 20px;
+  width: 50%;
+  height: 50%;
+}
+
+
+.login {
+  right: 50%;
+}
+
+.signup {
+  left: 50%;
+  z-index: 1;
+  transform: translateX(-10%);
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+.wrapper.right-panel-active .overlay {
+  transform: translateX(-100%);
+}
+
+.wrapper.right-panel-active .signup {
+  transform: translateX(0%);
+  animation: show 0.01s ease forwards;
+  animation-delay: 0.6s; /* Delay to match sliding transition */
+}
+
+.wrapper.right-panel-active .login {
+  transform: translateX(10%);
+  opacity: 1;
+  z-index: 4;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+.wrapper.right-panel-active .overlay-right {
+  transform: translateX(190%);
+  opacity: 0;
+}
+
+.wrapper.right-panel-active .overlay-left {
+  transform: translateX(0);
+}
+
+
+@keyframes show {
+	0%, 99% {
+		z-index: 1;
+	}
+	
+	99%, 100% {
+		opacity: 1;
+		z-index: 12;
+	}
+}
+
+.input_field {
+  width: 100%;
+  max-width: 300px; /* or however wide you want */
+}
+
+
+.login_button{
+    margin-top: 15px;
+}
+
+.signup_button{
+    margin-top: 15px;
+}

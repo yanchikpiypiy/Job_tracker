@@ -6,6 +6,7 @@ import SideBar from './components/utils/SideBar'
 import MainPage from './components/MainPage/MainPage'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ApplicationsList from './components/ApplicationPage/ApplicationList'
+import AuthPage from './components/AuthPage/AuthPage'
 function App() {
 
   return (
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path="dashboard" element={<MainPage></MainPage>}></Route>
         <Route path="jobs" element={<ApplicationsList></ApplicationsList>}></Route>
+        <Route path="login" element={<AuthPage></AuthPage>}></Route>
       </Routes>
       
     </Router>
