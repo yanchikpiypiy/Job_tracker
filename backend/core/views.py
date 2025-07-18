@@ -6,16 +6,16 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from .models import Application, User
 from .serializers import ApplicationSerializer, UserSerializer
-
+from rest_framework.permissions import IsAuthenticated
 class ApplicationApiView(viewsets.ModelViewSet):
     queryset = Application.objects.all()
     serializer_class = ApplicationSerializer
-
+    permission_classes = [IsAuthenticated]
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-    @action(methods=["get"], detail=True, url_path="user_application")
+    @action(detail=True,methods=["get"], url_path="user_application", name="User Application")
     def UserApplication(self, request, pk):
         
         user = get_object_or_404(User, pk=pk)
