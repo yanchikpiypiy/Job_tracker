@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import styles from './AuthPage.module.css';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/UserContext';
 export default function AuthPage() {
     const navigate = useNavigate()
-
+    const {login} = useContext(AuthContext)
     const [isRightPanelActive, setIsRightPanelActive] = useState(false);
 
     // State for login form
@@ -32,6 +33,7 @@ export default function AuthPage() {
             console.log("Login success:", data);
             localStorage.setItem("access_token", data.access);
             localStorage.setItem("refresh_token", data.refresh);
+            login(data.access)
             navigate("/dashboard")
             // Save token or redirect user
         } catch (err) {

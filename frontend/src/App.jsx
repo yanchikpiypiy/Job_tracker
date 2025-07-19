@@ -7,17 +7,23 @@ import MainPage from './components/MainPage/MainPage'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ApplicationsList from './components/ApplicationPage/ApplicationList'
 import AuthPage from './components/AuthPage/AuthPage'
+import { AuthProvider } from './components/context/UserContext'
 function App() {
 
   return (
+    <AuthProvider>
     <Router>
-      <Routes>
-        <Route path="dashboard" element={<MainPage></MainPage>}></Route>
-        <Route path="jobs" element={<ApplicationsList></ApplicationsList>}></Route>
-        <Route path="login" element={<AuthPage></AuthPage>}></Route>
-      </Routes>
+      
+        <Routes>
+          <Route path="dashboard" element={<MainPage></MainPage>}></Route>
+          <Route path="jobs" element={<ApplicationsList></ApplicationsList>}></Route>
+          <Route path="login" element={<AuthPage></AuthPage>}></Route>
+        </Routes>
+      
+      
       
     </Router>
+    </AuthProvider>
     
   )
 }

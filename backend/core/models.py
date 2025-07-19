@@ -39,7 +39,7 @@ class User(AbstractUser,TimeStampedModel):
     USERNAME_FIELD = 'email'  # Tell Django to use email to log in
     REQUIRED_FIELDS = ["username"]
     def __str__(self):
-        return f"{self.first_name} + {self.email} user in the db"
+        return f"{self.username} + {self.email} user in the db"
     
 
 class Application(TimeStampedModel):
@@ -79,7 +79,7 @@ class Application(TimeStampedModel):
 
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=APPLIED)
 
-    date_applied = models.DateTimeField(default=now, editable=False)
+    date_applied = models.DateTimeField(default=now, editable=True)
     salary = models.FloatField(null=True, blank=True)
 
     def __str__(self):

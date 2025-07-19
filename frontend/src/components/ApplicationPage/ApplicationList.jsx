@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styles from "./ApplicationList.module.css";
 import SideBar from "../utils/SideBar";
 import JobRow  from "./JobRow";
+import { AuthContext } from "../context/UserContext";
 
 /* ─── grouped mock data (unchanged) ───────────────────────────────── */
 const mockGroups = [

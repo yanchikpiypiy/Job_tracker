@@ -1,13 +1,14 @@
-
-export default function SideBar({userdata}){
-
+import { useContext } from "react";
+import { AuthContext } from "../context/UserContext";
+export default function SideBar(){
+    const {user} = useContext(AuthContext)
     return (
         <aside className="sidebar-main">
             <div className="sidebar-top">
                 <div className="profile-section">
                 <img src="public/Io_icon.png" className="profile-img" alt="Profile image"></img>
                 <div className="profile-info">
-                    <span className="profile-name">{userdata.username}</span>
+                    <span className="profile-name">{user?.username}</span>
                     <span className="profile-status">Online</span>
                     
                 </div>

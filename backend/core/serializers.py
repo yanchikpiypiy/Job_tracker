@@ -46,4 +46,4 @@ class UserSerializer(serializers.ModelSerializer):
 class ApplicationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Application
-        exclude = ["date_applied", "created_at", "updated_at"]
+        exclude = ["created_at", "updated_at"]
