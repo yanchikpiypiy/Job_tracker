@@ -30,7 +30,8 @@ export default function AuthPage() {
             if (!response.ok) throw new Error(data.detail || "Login failed");
 
             console.log("Login success:", data);
-
+            localStorage.setItem("access_token", data.access);
+            localStorage.setItem("refresh_token", data.refresh);
             navigate("/dashboard")
             // Save token or redirect user
         } catch (err) {
@@ -41,8 +42,11 @@ export default function AuthPage() {
   async function signupUser(credentials) {
     try {
       const response = await fetch("http://127.0.0.1:8000/api/v1/auth/users/", {
-        method: "POST",
-        headers: { 'Content-Type': 'application/json' },
+        method: "GET",
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authentication': 'token'        
+         },
         body: JSON.stringify(credentials),
       });
 

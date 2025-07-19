@@ -1,10 +1,30 @@
 import JobApplication from "./JobApplication";
 import Card from "./Card";
 import SideBar from "../utils/SideBar";
+import { useEffect,useState } from "react";
 export default function MainPage(){
+    const [userData, setUserData] = useState(null)
+    useEffect( () => {
+        async function getUser() {
+        const token = localStorage.getItem('access_token')
+        const response = await fetch("http://127.0.0.1:8000/api/v1/auth/users/me/",{
+            method: "GET",
+            headers: {"Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,}
+            
+        })
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.detail || "Login failed");
+
+        console.log("Data success:", data);
+        setUserData(data)
+    }
+    getUser();
+    }, [])
+    
     return (
         <div class="layout">
-        <SideBar> </SideBar>
+        <SideBar userdata={userData}> </SideBar>
       
         <div className="content-main">
             <div className="cards-main">
