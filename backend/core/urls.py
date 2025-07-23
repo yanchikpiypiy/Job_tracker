@@ -7,8 +7,9 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 router = routers.DefaultRouter()
-router.register(r"applications", views.ApplicationApiView)
+router.register(r"applications", views.ApplicationApiView, basename="applications")
 router.register(r"userslist", views.UserViewSet, basename="users")
+router.register(r"applicationall", views.ApplicationsApiView, basename="allapplications")
 print(router.urls)
 
 urlpatterns = [

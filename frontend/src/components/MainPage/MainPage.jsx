@@ -19,7 +19,7 @@ export default function MainPage(){
             </div>
 
             <div className="applications-main">
-                 <div class="application-header">
+                 <div className="application-header">
                     <div>Position</div>
                     <div>Company</div>
                     <div>Location</div>

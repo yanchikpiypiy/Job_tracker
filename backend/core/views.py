@@ -14,11 +14,20 @@ from .serializers import EmailTokenObtainPairSerializer
 
 class EmailTokenObtainPairView(TokenObtainPairView):
     serializer_class = EmailTokenObtainPairSerializer
-    
-class ApplicationApiView(viewsets.ModelViewSet):
+
+
+# all applications for dev purposes  
+class ApplicationsApiView(viewsets.ModelViewSet):
     queryset = Application.objects.all()
     serializer_class = ApplicationSerializer
     permission_classes = [IsAuthenticated]
+
+class ApplicationApiView(viewsets.ModelViewSet):
+    serializer_class = ApplicationSerializer
+    permission_classes = [IsAuthenticated]
+    def get_queryset(self):
+        return Application.objects.filter(user=self.request.user)
+    
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
