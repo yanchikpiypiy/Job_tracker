@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-
+import { authAPI, applicationsAPI } from './api';
 export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
@@ -10,66 +10,74 @@ export function AuthProvider({ children }) {
   const [applications,setApplications] = useState([]);
   
   useEffect(() => {
-  const fetchUserAndApps = async () => {
-    if (!authToken) {
-      console.log("it disappeared");
-      setUser(null);
-      setLoading(false);
-      return;
-    }
-    
-    if (userFetched) return;
-    
-    setLoading(true);
-    
-    try {
-      // Fetch user first
-      const userResponse = await fetch("http://127.0.0.1:8000/api/v1/auth/users/me/", {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      });
-      
-      if (!userResponse.ok) throw new Error("Failed to fetch user");
-      
-      const userData = await userResponse.json();
-      setUser(userData);
-      setUserFetched(true);
-      
-      // Then fetch applications
-      const appsResponse = await fetch(`http://127.0.0.1:8000/api/v1/applications/`, {
-        headers: { Authorization: `Bearer ${authToken}` }
-      });
-      
-      if (appsResponse.ok) {
-        const apps = await appsResponse.json();
-        setApplications(apps);
-        console.log("Applications fetched:", apps);
+    const fetchUserAndApps = async () => {
+      if (!authToken) {
+        setLoading(false);
+        return;
       }
       
+      if (userFetched) return;
+      
+      setLoading(true);
+      
+      try {
+        // Fetch user first
+        const userResponse = await authAPI.getUser();
+        setUser(userResponse.data);
+        setUserFetched(true);
+
+        const appResponse = await applicationsAPI.getUserApplications()
+        setApplications(appResponse.data)
+        console.log("Applications fetched:", appResponse.data);
+      } catch (error) {
+        console.log("Error:", error);
+        if (error.response?.status !== 401) {
+            setUser(null);
+          }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserAndApps();
+  }, [authToken, userFetched]);
+
+  useEffect(() => {
+      const handleLogout = () => {
+        setAuthToken(null);
+        setUser(null);
+        setUserFetched(false);
+        setApplications([]);
+      };
+
+      window.addEventListener('auth:logout', handleLogout);
+      return () => window.removeEventListener('auth:logout', handleLogout);
+    }, []);
+  
+  async function login(credentials){
+    try {
+      const response = await authAPI.login(credentials)
+      const { access, refresh } = response.data;
+      
+      localStorage.setItem("access_token", access);
+      localStorage.setItem("refresh_token", refresh);
+      setAuthToken(access);
+      setUserFetched(false); // Reset to trigger useEffect
+
+      return response.data;
     } catch (error) {
-      console.log("Error:", error);
-      setUser(null);
-    } finally {
-      setLoading(false);
+      throw error;
     }
-  };
 
-  fetchUserAndApps();
-}, [authToken, userFetched]);
-
-
-  function login(token) {
-    localStorage.setItem("access_token", token);
-    setAuthToken(token);
   }
-
   function logout() {
     localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
     setAuthToken(null);
     setUser(null);
+    setUserFetched(false);
+    setApplications([]);
   }
-
   return (
     <AuthContext.Provider value={{ user, authToken, login, logout, loading, applications }}>
       {children}

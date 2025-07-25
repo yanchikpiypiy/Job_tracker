@@ -19,62 +19,25 @@ export default function AuthPage() {
     const handleSignUpClick = () => setIsRightPanelActive(true);
     const handleSignInClick = () => setIsRightPanelActive(false);
 
-    async function loginUser(credentials) {
-        try {
-            const response = await fetch("http://127.0.0.1:8000/api/v1/auth/token/", {
-            method: "POST",
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(credentials),
-            });
-
-            const data = await response.json();
-            if (!response.ok) throw new Error(data.detail || "Login failed");
-
-            console.log("Login success:", data);
-            localStorage.setItem("access_token", data.access);
-            localStorage.setItem("refresh_token", data.refresh);
-            login(data.access)
-            navigate("/dashboard")
-            // Save token or redirect user
-        } catch (err) {
-            console.error(err.message);
-        }
+    async function handleLogin(credentials) {
+      await login(credentials); // This is async, so we need await
+      navigate("/dashboard");   // This runs AFTER login completes
     }
+  
 
-  async function signupUser(credentials) {
-    try {
-      const response = await fetch("http://127.0.0.1:8000/api/v1/auth/users/", {
-        method: "GET",
-        headers: { 
-          'Content-Type': 'application/json',
-          'Authentication': 'token'        
-         },
-        body: JSON.stringify(credentials),
-      });
+    const handleLoginSubmit = (e) => {
+      e.preventDefault();
+      handleLogin({ email: loginEmail, password: loginPassword });
+    };
 
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.detail || "Signup failed");
-
-      console.log("Signup success:", data);
-      // Optionally log user in after signup
-    } catch (err) {
-      console.error(err.message);
-    }
-  }
-
-  const handleLoginSubmit = (e) => {
-    e.preventDefault();
-    loginUser({ email: loginEmail, password: loginPassword });
-  };
-
-  const handleSignupSubmit = (e) => {
-    e.preventDefault();
-    if (signupPassword !== confirmPassword) {
-      console.error("Passwords do not match");
-      return;
-    }
-    signupUser({ email: signupEmail, password: signupPassword });
-  };
+    const handleSignupSubmit = (e) => {
+      e.preventDefault();
+      if (signupPassword !== confirmPassword) {
+        console.error("Passwords do not match");
+        return;
+      }
+      signupUser({ email: signupEmail, password: signupPassword });
+    };
 
   return (
     <div className={`${styles.wrapper} ${isRightPanelActive ? styles['right-panel-active'] : ''}`}>
