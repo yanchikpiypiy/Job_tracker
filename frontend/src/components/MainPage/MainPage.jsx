@@ -11,11 +11,11 @@ export default function MainPage(){
       
         <div className="content-main">
             <div className="cards-main">
-                <Card title={"Applied"} count={32} icon_name={"smile"}></Card>
-                <Card title={"Refused"} count={32} icon_name={"frown"}></Card>
-                <Card title={"Pending"} count={32} icon_name={"clock"}></Card>
-                <Card title={"Offers"} count={32} icon_name={"trophy"}></Card>
-                <Card title={"Interviews"} count={32} icon_name={"calendar-clock"}></Card>
+                <Card title={"Applied"} count={64} icon_name={"smile"}></Card>
+                <Card title={"Refused"} count={50} icon_name={"frown"}></Card>
+                <Card title={"Pending"} count={6} icon_name={"clock"}></Card>
+                <Card title={"Offers"} count={2} icon_name={"trophy"}></Card>
+                <Card title={"Interviews"} count={10} icon_name={"calendar-clock"}></Card>
             </div>
 
             <div className="applications-main">

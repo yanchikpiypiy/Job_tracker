@@ -13,6 +13,10 @@ export function convertor(array) {
             square: styles.redSq,
             pill: styles.pillRed,
         },
+        "INTERVIEW": {
+            square: styles.greenSq,   // Or use a new color like styles.blueSq if defined
+            pill: styles.pillGreen,   // Or define a new `pillBlue` for visual distinction
+        },
     };
     
     const grouped = {};

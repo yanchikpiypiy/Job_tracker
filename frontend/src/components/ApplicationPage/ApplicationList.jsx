@@ -31,6 +31,7 @@ export default function ApplicationsList() {
 	const { applications } = useContext(AuthContext)
 	console.log(applications[0])
 	const grouped = convertor(applications)
+	console.log('Grouped from convertor:', grouped);
 	const [collapsed, setCollapsed] = useState(
 		Object.fromEntries(grouped.map(g => [g.status, false]))
 	);
@@ -61,7 +62,7 @@ export default function ApplicationsList() {
 										collapsed[group.status] ? styles.caretDown : styles.caretUp
 									}`}
 								/>
-								<span className={styles.badge}>{group.status}</span>
+								<span className={`${styles.badge} ${group.pill}`}>{group.status}</span>
 								<span className={styles.count}>· {group.jobs.length} jobs</span>
 							</header>
 
