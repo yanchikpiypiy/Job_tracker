@@ -35,7 +35,14 @@ export default function ApplicationsList() {
 	const [collapsed, setCollapsed] = useState(
 		Object.fromEntries(grouped.map(g => [g.status, false]))
 	);
-
+	const [ticked, setTicked] = useState(
+		Object.fromEntries(grouped.map(g => [g.status, false]))
+	)
+	function handleStatusSquare(status){
+		setTicked(prev => ({ ...prev, [status]: !prev[status] }))
+		
+	}
+	console.log(ticked)
 	return (
 		<div className={styles.layout}>
 			<SideBar />
@@ -70,14 +77,16 @@ export default function ApplicationsList() {
 							{!collapsed[group.status] && (
 								<>
 									<div className={`${styles.gridRow} ${styles.header}`}>
-										<div />
+										<div onClick={() => handleStatusSquare(group.status)}>
+											<span className={`${styles.square} ${ticked[group.status] == true ? styles.greenSq : styles.transSq}`} />
+										</div>
 										<div>Name</div>
 										<div>Company</div>
 										<div>Location</div>
 										<div>Type</div>
 										<div>Date</div>
 										<div>Salary</div>
-										<div />
+										
 										<div>Status</div>
 									</div>
 
@@ -88,6 +97,7 @@ export default function ApplicationsList() {
 											squareClass={group.square}
 											pillClass={group.pill}
 											statusText={group.status}
+											ticks={ticked}
 										/>
 									))}
 								</>
