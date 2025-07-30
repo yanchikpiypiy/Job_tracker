@@ -448,9 +448,9 @@ body{
 
 .application-header {
   display: grid;
-  grid-template-columns: 2.5fr 2fr 1.5fr 1fr 1.2fr 1fr 0.8fr 1.2fr;
+  grid-template-columns: 2.2fr 1.8fr 1.4fr 0.9fr 1fr 0.8fr 0.8fr 1.1fr;
   align-items: center;
-  
+
   padding: 1rem;
   font-size: var(--font-sm);
   font-weight: 700;
@@ -460,9 +460,12 @@ body{
   border-bottom: 2px solid var(--color-border);
   background-color: var(--color-surface);
   
-  
 }
 
+
+.application-header div:nth-child(8){
+  text-align: center;
+}
 .application {
   display: grid;
   grid-template-columns: 2.5fr 2fr 1.5fr 1fr 1.2fr 1fr 0.8fr 1.2fr;
@@ -524,6 +527,7 @@ body{
   color: #fff;
   border: none;
   transition: transform 0.3s, box-shadow 0.3s;
+  text-align: center;
 }
 .application-tag::before {
   content: "";
