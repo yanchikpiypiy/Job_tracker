@@ -13,18 +13,22 @@ import { useState } from "react";
  * onEdit       Function called when edit button is clicked
  * onDelete     Function called when delete button is clicked
  */
-export default function JobRow({ job, squareClass, pillClass, statusText, onEdit, onDelete, ticks }) {
+export default function JobRow({ job, squareClass, pillClass, statusText, onEdit, onDelete, ticks,onTickChange }) {
   function onEdit(){
     // here we will redirect to a page or modal/ pop up -> job listing
   }
   function onDelete(){
     // here we will delete this specific job
   }
-
+  function handlePick(){
+    onTickChange(statusText,job.id)
+  }
   return (
     <div className={styles.gridRow}> 
-      <div>
-        <span className={`${styles.square} ${ ticks[statusText] == true ? styles.greenSq : styles.transSq} `} /> 
+      <div onClick={() => handlePick()}>
+        <span className={`${styles.square} ${ ticks[job.id] ? styles.greenSq : styles.transSq} `}>
+          {ticks[job.id] && (<img src="/check.svg" alt="Selected" className={styles.checkIcon} />)}
+        </span>
         {/* we could use ${squareClass} here for colour */}
       </div>
       

@@ -509,7 +509,7 @@ body{
 }
 
 .application a:hover::after {
-  width: 48%;
+  width: 60%;
 }
 
 .application a:hover {

@@ -38,9 +38,28 @@ export default function ApplicationsList() {
 	const [ticked, setTicked] = useState(
 		Object.fromEntries(grouped.map(g => [g.status, false]))
 	)
+	
+	const [jobTicked, setJobTicked] = useState({});
+	
 	function handleStatusSquare(status){
-		setTicked(prev => ({ ...prev, [status]: !prev[status] }))
+		const newGroupTicked = !ticked[status];
+		setTicked(prev => ({ ...prev, [status]: newGroupTicked }));
 		
+		// When group is toggled, toggle all jobs in that group
+		const groupJobs = grouped.find(g => g.status === status)?.jobs || [];
+		const jobUpdates = {};
+		groupJobs.forEach(job => {
+			jobUpdates[job.id] = newGroupTicked;
+		});
+		setJobTicked(prev => ({ ...prev, ...jobUpdates }));
+	}
+	console.log("HERE")
+	console.log(jobTicked)
+
+	
+	function handleJobTickChange(status,jobId) {
+		setTicked(prev => ({ ...prev, [status]: false }))
+		setJobTicked(prev => ({...prev, [jobId] : !prev[jobId]}))
 	}
 	console.log(ticked)
 	return (
@@ -78,7 +97,10 @@ export default function ApplicationsList() {
 								<>
 									<div className={`${styles.gridRow} ${styles.header}`}>
 										<div onClick={() => handleStatusSquare(group.status)}>
-											<span className={`${styles.square} ${ticked[group.status] == true ? styles.greenSq : styles.transSq}`} />
+											<span className={`${styles.square} ${ticked[group.status] == true ? styles.greenSq : styles.transSq}`} >
+												{ticked[group.status] && (<img src="/check.svg" alt="Selected" className={styles.checkIcon} />)}
+											</span>
+											
 										</div>
 										<div>Name</div>
 										<div>Company</div>
@@ -97,7 +119,8 @@ export default function ApplicationsList() {
 											squareClass={group.square}
 											pillClass={group.pill}
 											statusText={group.status}
-											ticks={ticked}
+											ticks={jobTicked}
+											onTickChange={handleJobTickChange}
 										/>
 									))}
 								</>
