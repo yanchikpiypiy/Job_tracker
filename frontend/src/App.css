@@ -442,6 +442,7 @@ body{
   box-shadow: rgba(45, 35, 66, 0.4) 0 4px 20px,rgba(45, 35, 66, 0.3) 0 4px 13px -3px,rgb(205, 205, 205) 0 -5px 0 inset;
   transition: transform 0.3s ease, border-color 0.3s ease;
   margin-top: 20px;
+  padding-bottom: 10px;
 }
 
 
@@ -457,7 +458,6 @@ body{
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   color: var(--color-muted);
-  border-bottom: 2px solid var(--color-border);
   background-color: var(--color-surface);
   
 }
@@ -472,6 +472,7 @@ body{
   padding: 1rem;
   gap: 1rem;
   align-items: center;
+  border-top: 2px solid var(--color-border);
 }
 
 .application-header,
