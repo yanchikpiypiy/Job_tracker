@@ -448,8 +448,9 @@ body{
 
 .application-header {
   display: grid;
-  grid-template-columns: 3fr 2fr 2.5fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 2.5fr 2fr 1.5fr 1fr 1.2fr 1fr 0.8fr 1.2fr;
   align-items: center;
+  
   padding: 1rem;
   font-size: var(--font-sm);
   font-weight: 700;
@@ -464,7 +465,7 @@ body{
 
 .application {
   display: grid;
-  grid-template-columns: 3fr 2fr 2.5fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 2.5fr 2fr 1.5fr 1fr 1.2fr 1fr 0.8fr 1.2fr;
   padding: 1rem;
   gap: 1rem;
   align-items: center;
@@ -534,7 +535,7 @@ body{
   filter: blur(6px);
 }
 
-.application-tag.applied {
+.application-tag.interview {
   background-color: var(--neon-green);
   box-shadow:
     0 0 6px rgba(0, 255, 143, 0.2),

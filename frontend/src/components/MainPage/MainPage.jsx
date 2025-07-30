@@ -4,18 +4,26 @@ import SideBar from "../utils/SideBar";
 import { useEffect,useState,useContext } from "react";
 import { AuthContext } from "../context/UserContext";
 export default function MainPage(){
-
+    const { applications } = useContext(AuthContext)
+    console.log(applications)
+    const refused = applications.filter((application) => application.status == "REFUSED")
+    const interview = applications.filter((application) => application.status == "INTERVIEW")
+    const pending = applications.filter((application) => application.status == "PENDING")
+    const applied = refused.length + interview.length + pending.length
+    console.log(refused)
+    console.log(pending)
+    console.log(applied)
     return (
         <div class="layout">
         <SideBar > </SideBar>
       
         <div className="content-main">
             <div className="cards-main">
-                <Card title={"Applied"} count={64} icon_name={"smile"}></Card>
-                <Card title={"Refused"} count={50} icon_name={"frown"}></Card>
-                <Card title={"Pending"} count={6} icon_name={"clock"}></Card>
+                <Card title={"Applied"} count={applied} icon_name={"smile"}></Card>
+                <Card title={"Refused"} count={refused.length} icon_name={"frown"}></Card>
+                <Card title={"Pending"} count={pending.length} icon_name={"clock"}></Card>
                 <Card title={"Offers"} count={2} icon_name={"trophy"}></Card>
-                <Card title={"Interviews"} count={10} icon_name={"calendar-clock"}></Card>
+                <Card title={"Interviews"} count={interview.length} icon_name={"calendar-clock"}></Card>
             </div>
 
             <div className="applications-main">
@@ -29,47 +37,18 @@ export default function MainPage(){
                     <div></div>
                     <div>Status</div>
                 </div>
-                <JobApplication
-                job_title="Software Engineer"
-                company_name="Amazon"
-                location="London, B297DQ"
-                work_type="Remote"
-                application_date="07/07/2004"
-                salary="40,000"
-                application_tag="Applied"
-                />
-                
-                <JobApplication
-                job_title="Senior Software Engineer"
-                company_name="Meta"
-                location="London, B297DQ"
-                work_type="On-site"
-                application_date="07/07/2004"
-                salary="540,000"
-                application_tag="Applied"
-                />
-                
-                
-
-                <JobApplication
-                job_title="Software Engineer"
-                company_name="Amazon"
-                location="London, B297DQ"
-                work_type="Remote"
-                application_date="07/07/2004"
-                salary="40,000"
-                application_tag="Applied"
-                />
-
-                <JobApplication
-                job_title="Software Engineer"
-                company_name="Amazon"
-                location="London, B297DQ"
-                work_type="Remote"
-                application_date="07/07/2004"
-                salary="40,000"
-                application_tag="Applied"
-                />
+                {applications.map(application => {
+                  return <JobApplication
+                key={application.id}
+                job_title={application.position}
+                company_name={application.company}
+                location={application.location}
+                work_type={application["job_type"]}
+                application_date={application["date_applied"].split('T')[0]}
+                salary={`£${application.salary.toLocaleString()}` }
+                application_tag={application.status}
+                />  
+                })}
                 </div>
         </div>
         </div>
