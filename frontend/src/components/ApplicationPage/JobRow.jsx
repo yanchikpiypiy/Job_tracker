@@ -1,6 +1,7 @@
 
 import styles from "./ApplicationList.module.css";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "../context/UserContext";
 /**
  * One table-row in the applications grid with edit/delete actions.
  *
@@ -14,6 +15,7 @@ import { useState } from "react";
  * onDelete     Function called when delete button is clicked
  */
 export default function JobRow({ job, squareClass, pillClass, statusText, onEdit, onDelete, ticks,onTickChange }) {
+  const {deleteUserApplication} = useContext(AuthContext)
   function onEdit(){
     // here we will redirect to a page or modal/ pop up -> job listing
   }
@@ -59,7 +61,7 @@ export default function JobRow({ job, squareClass, pillClass, statusText, onEdit
       <div>
         <button 
           className={`${styles.actionBtn} ${styles.deleteBtn}`}
-          onClick={() => onDelete(job)}
+          onClick={() => deleteUserApplication(job.id)}
           title="Delete application"
         >
           <img src="/delete.svg" alt="Delete" className={styles.actionIcon} />

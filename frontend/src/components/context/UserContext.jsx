@@ -8,7 +8,25 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [userFetched, setUserFetched] = useState(false);
   const [applications,setApplications] = useState([]);
-  
+
+  const deleteUserApplication = async (applicationId) => {
+    try {
+      // Call the API to delete the application
+      await applicationsAPI.deleteUserApplication(applicationId);
+      
+      // Update local state by removing the deleted application
+      setApplications(prevApps => 
+        prevApps.filter(app => app.id !== applicationId)
+      );
+      
+      console.log("Application deleted successfully:", applicationId);
+      return { success: true };
+    } catch (error) {
+      console.error("Error deleting application:", error);
+      throw error;
+    }
+  };
+
   useEffect(() => {
     const fetchUserAndApps = async () => {
       if (!authToken) {
@@ -79,7 +97,7 @@ export function AuthProvider({ children }) {
     setApplications([]);
   }
   return (
-    <AuthContext.Provider value={{ user, authToken, login, logout, loading, applications }}>
+    <AuthContext.Provider value={{ user, authToken, login, logout, loading, applications,deleteUserApplication }}>
       {children}
     </AuthContext.Provider>
   );
