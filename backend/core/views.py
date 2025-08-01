@@ -21,13 +21,14 @@ class ApplicationsApiView(viewsets.ModelViewSet):
     queryset = Application.objects.all()
     serializer_class = ApplicationSerializer
     permission_classes = [IsAuthenticated]
-
 class ApplicationApiView(viewsets.ModelViewSet):
     serializer_class = ApplicationSerializer
     permission_classes = [IsAuthenticated]
     def get_queryset(self):
         return Application.objects.filter(user=self.request.user)
-    
+    def perform_create(self, serializer):
+        # Automatically assigns the user from the JWT token
+        serializer.save(user=self.request.user)
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer

@@ -132,7 +132,10 @@
 .pillGreen{ background:#d1fae5; color:#065f46; }
 .pillGrey { background:#e5e7eb; color:#374151; }
 .pillRed  { background:#fee2e2; color:#b91c1c; }
-
+.pillBlue { 
+  background: #dbeafe; 
+  color: #1e40af; 
+}
 /* ─── action icons ────────────────────────────────────────────────── */
 .actionBtn {
   background: transparent;

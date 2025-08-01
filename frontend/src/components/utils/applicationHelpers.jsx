@@ -3,7 +3,7 @@ export function convertor(array) {
     const statusStyles = {
         "APPLIED": {
             square: styles.greenSq,
-            pill: styles.pillGreen,
+            pill: styles.pillBlue,
         },
         "PENDING": {
             square: styles.greySq,

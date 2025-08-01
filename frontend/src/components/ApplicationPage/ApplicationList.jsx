@@ -4,6 +4,7 @@ import SideBar from "../utils/SideBar";
 import JobRow from "./JobRow";
 import { AuthContext } from "../context/UserContext";
 import { convertor } from "../utils/applicationHelpers";
+import AddJobModal from "../modal/AddJobModal";
 /* ─── grouped mock data (unchanged) ───────────────────────────────── */
 // example of an object returned by convertor function
 const mockGroups = [
@@ -61,11 +62,13 @@ export default function ApplicationsList() {
 		setTicked(prev => ({ ...prev, [status]: false }))
 		setJobTicked(prev => ({...prev, [jobId] : !prev[jobId]}))
 	}
+
+
 	console.log(ticked)
 	return (
 		<div className={styles.layout}>
 			<SideBar />
-
+			<AddJobModal></AddJobModal>
 			<div className={styles.contentMain}>
 				<div className={styles.applicationMain}>
 

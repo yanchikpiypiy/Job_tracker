@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import "tailwindcss";
+
 
 :root {
   --color-bg: #f8f9fa;
@@ -19,7 +21,7 @@
   --neon-green: #00ff8f;
   --neon-red: #e11d48;
   --neon-cyan: #3af2ff;
-
+  --neon-blue: #008fff;
   --font-xs: 0.64rem;
   --font-sm: 0.8rem;
   --font-base: 1rem;
@@ -547,7 +549,13 @@ body{
     0 0 12px rgba(0, 255, 143, 0.1),
     0 0 24px rgba(0, 255, 143, 0.05);
 }
-
+.application-tag.applied {
+  background-color: var(--neon-blue);
+  box-shadow: 
+    0 0 6px rgba(0, 191, 255, 0.2),
+    0 0 12px rgba(0, 191, 255, 0.1),
+    0 0 24px rgba(0, 191, 255, 0.05);
+}
 .application-tag.refused {
   background-color: var(--neon-red);
   box-shadow:

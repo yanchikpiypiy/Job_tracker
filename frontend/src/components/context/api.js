@@ -75,7 +75,8 @@ export const authAPI = {
 
 export const applicationsAPI = {
     getUserApplications: () => api.get('applications/'),
-    deleteUserApplication: (id) => api.delete(`applications/${id}/`)
+    deleteUserApplication: (id) => api.delete(`applications/${id}/`),
+    createUserApplication: (data) => api.post('applications/', data)
 }
 
 export default api
