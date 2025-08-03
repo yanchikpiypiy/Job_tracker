@@ -4,8 +4,8 @@ import SideBar from "../utils/SideBar";
 import { useEffect,useState,useContext } from "react";
 import { AuthContext } from "../context/UserContext";
 export default function MainPage(){
-    const { applications } = useContext(AuthContext)
-    console.log(applications)
+    const { applications} = useContext(AuthContext)
+    const sliced_application = applications.slice(0,5)
     const refused = applications.filter((application) => application.status == "REFUSED")
     const interview = applications.filter((application) => application.status == "INTERVIEW")
     const pending = applications.filter((application) => application.status == "PENDING")
@@ -37,7 +37,7 @@ export default function MainPage(){
                     <div></div>
                     <div>Status</div>
                 </div>
-                {applications.map(application => {
+                {sliced_application.map(application => {
                   return <JobApplication
                 key={application.id}
                 job_title={application.position}

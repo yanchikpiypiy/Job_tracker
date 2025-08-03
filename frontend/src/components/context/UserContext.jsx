@@ -9,6 +9,7 @@ export function AuthProvider({ children }) {
   const [userFetched, setUserFetched] = useState(false);
   const [applications,setApplications] = useState([]);
 
+  // user applications logic
   const createUserApplication = async (data) => {
     try {
       // Call the API to delete the application
@@ -16,6 +17,23 @@ export function AuthProvider({ children }) {
       console.log(response)
       setApplications(prevApps => [...prevApps, response.data]);
       
+      console.log("Application added successfully:", data);
+      return { success: true };
+    } catch (error) {
+      console.error("Error adding application:", error);
+      throw error;
+    }
+  };
+  const updateUserApplication = async (id, data) => {
+    try {
+      // Call the API to delete the application
+      const response = await applicationsAPI.updateUserApplication(id,data);
+      console.log(response)
+      setApplications(prevApps => 
+        prevApps.map(app => 
+          app.id === id ? { ...app, ...response.data } : app
+        )
+      );
       console.log("Application added successfully:", data);
       return { success: true };
     } catch (error) {
@@ -111,7 +129,7 @@ export function AuthProvider({ children }) {
     setApplications([]);
   }
   return (
-    <AuthContext.Provider value={{ user, authToken, login, logout, loading, applications,deleteUserApplication, createUserApplication }}>
+    <AuthContext.Provider value={{ user, authToken, login, logout, loading, applications,deleteUserApplication, createUserApplication, updateUserApplication }}>
       {children}
     </AuthContext.Provider>
   );

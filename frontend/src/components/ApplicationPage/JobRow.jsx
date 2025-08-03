@@ -2,6 +2,7 @@
 import styles from "./ApplicationList.module.css";
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/UserContext";
+import EditJobModal from "../modal/EditJobModal";
 /**
  * One table-row in the applications grid with edit/delete actions.
  *
@@ -14,14 +15,39 @@ import { AuthContext } from "../context/UserContext";
  * onEdit       Function called when edit button is clicked
  * onDelete     Function called when delete button is clicked
  */
-export default function JobRow({ job, squareClass, pillClass, statusText, onEdit, onDelete, ticks,onTickChange }) {
+export default function JobRow({ job, squareClass, pillClass, statusText, ticks,onTickChange }) {
   const {deleteUserApplication} = useContext(AuthContext)
-  function onEdit(){
-    // here we will redirect to a page or modal/ pop up -> job listing
-  }
-  function onDelete(){
-    // here we will delete this specific job
-  }
+  // editing modal logic
+	const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editingApplication, setEditingApplication] = useState(null);
+  // delete confirmation modal logic
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+	const handleEditClick = (application) => {
+		setEditingApplication(application);
+		setIsEditModalOpen(true);
+  	};
+
+	 const handleCloseEditModal = () => {
+    	setIsEditModalOpen(false);
+    	setEditingApplication(null);
+  	};
+	
+  // prompt pop up 
+
+  const handleDeleteClick = () => {
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    deleteUserApplication(job.id);
+    setIsDeleteModalOpen(false);
+  };
+
+  const handleCancelDelete = () => {
+    setIsDeleteModalOpen(false);
+  };
+
   function handlePick(){
     onTickChange(statusText,job.id)
   }
@@ -50,7 +76,7 @@ export default function JobRow({ job, squareClass, pillClass, statusText, onEdit
       <div>
         <button 
           className={`${styles.actionBtn} ${styles.editBtn}`}
-          onClick={() => onEdit(job)}
+          onClick={() => handleEditClick(job)}
           title="Edit application"
         >
           <img src="/edit.svg" alt="Edit" className={styles.actionIcon} />
@@ -61,12 +87,47 @@ export default function JobRow({ job, squareClass, pillClass, statusText, onEdit
       <div>
         <button 
           className={`${styles.actionBtn} ${styles.deleteBtn}`}
-          onClick={() => deleteUserApplication(job.id)}
+          onClick={handleDeleteClick}
           title="Delete application"
         >
           <img src="/delete.svg" alt="Delete" className={styles.actionIcon} />
         </button>
       </div>
+      <EditJobModal
+      application={editingApplication}
+      isOpen={isEditModalOpen}
+      onClose={handleCloseEditModal}
+    />
+    {/* Delete Confirmation Modal */}
+      {isDeleteModalOpen && (
+        <div className={styles.modalBackdrop} onClick={handleCancelDelete}>
+          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalHeader}>
+              <h3>Confirm Delete</h3>
+            </div>
+            <div className={styles.modalBody}>
+              <p>Are you sure you want to delete the application for:</p>
+              <p><strong>{job.position}</strong> at <strong>{job.company}</strong>?</p>
+              <p style={{ color: '#c33', fontSize: '0.9em' }}>This action cannot be undone.</p>
+            </div>
+            <div className={styles.buttonContainer}>
+              <button 
+                onClick={handleCancelDelete}
+                className={`${styles.button} ${styles.buttonSecondary}`}
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={handleConfirmDelete}
+                className={`${styles.button} ${styles.buttonDanger}`}
+                style={{ backgroundColor: '#dc3545', color: 'white' }}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+    )}
     </div>
   );
 }

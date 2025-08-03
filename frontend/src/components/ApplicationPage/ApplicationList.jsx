@@ -5,6 +5,7 @@ import JobRow from "./JobRow";
 import { AuthContext } from "../context/UserContext";
 import { convertor } from "../utils/applicationHelpers";
 import AddJobModal from "../modal/AddJobModal";
+import EditJobModal from "../modal/EditJobModal";
 /* ─── grouped mock data (unchanged) ───────────────────────────────── */
 // example of an object returned by convertor function
 const mockGroups = [
@@ -30,18 +31,17 @@ const mockGroups = [
 
 export default function ApplicationsList() {
 	const { applications } = useContext(AuthContext)
-	console.log(applications[0])
 	const grouped = convertor(applications)
-	console.log('Grouped from convertor:', grouped);
 	const [collapsed, setCollapsed] = useState(
 		Object.fromEntries(grouped.map(g => [g.status, false]))
 	);
+	// ticks logic
 	const [ticked, setTicked] = useState(
 		Object.fromEntries(grouped.map(g => [g.status, false]))
 	)
-	
 	const [jobTicked, setJobTicked] = useState({});
-	
+
+	// toggling all squares os the same group
 	function handleStatusSquare(status){
 		const newGroupTicked = !ticked[status];
 		setTicked(prev => ({ ...prev, [status]: newGroupTicked }));
@@ -54,8 +54,6 @@ export default function ApplicationsList() {
 		});
 		setJobTicked(prev => ({ ...prev, ...jobUpdates }));
 	}
-	console.log("HERE")
-	console.log(jobTicked)
 
 	
 	function handleJobTickChange(status,jobId) {
@@ -63,8 +61,6 @@ export default function ApplicationsList() {
 		setJobTicked(prev => ({...prev, [jobId] : !prev[jobId]}))
 	}
 
-
-	console.log(ticked)
 	return (
 		<div className={styles.layout}>
 			<SideBar />
@@ -132,6 +128,8 @@ export default function ApplicationsList() {
 					))}
 				</div>
 			</div>
+		
 		</div>
+			
 	);
 }
