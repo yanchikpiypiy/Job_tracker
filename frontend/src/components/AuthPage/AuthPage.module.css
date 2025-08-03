@@ -17,7 +17,7 @@ body {
   font-weight: bold;
 }
 
-button {
+.wrapper button {
   border-radius: 20px;
   border: 1px solid #FF4B2B;
   background-color: #FF4B2B;
@@ -30,7 +30,7 @@ button {
   transition: transform 80ms ease-in;
 }
 
-button:hover{
+.wrapper button:hover{
     transform: translateY(10%);
 }
 

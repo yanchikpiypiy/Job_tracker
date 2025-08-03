@@ -3,6 +3,15 @@ import { ChevronLeft, ChevronRight, Plus, Clock, MapPin, Users, X, Calendar } fr
 import styles from './MeetingCalendar.module.css';
 import SideBar from '../utils/SideBar';
 
+
+/* meeting object {
+  "2025-08-03": [
+    { "id": 1, "title": "Team Sync", "time": "10:00 AM", "type": "internal" }
+  ],
+  ...
+}
+*/
+
 const MeetingCalendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
@@ -16,7 +25,8 @@ const MeetingCalendar = () => {
     type: 'interview',
     notes: ''
   });
-
+  console.log(meetings)
+  console.log(currentDate)
   const monthNames = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
@@ -45,6 +55,7 @@ const MeetingCalendar = () => {
   const navigateMonth = (direction) => {
     setCurrentDate(prev => {
       const newDate = new Date(prev);
+      console.log(`${newDate} new data`)
       newDate.setMonth(prev.getMonth() + direction);
       return newDate;
     });
