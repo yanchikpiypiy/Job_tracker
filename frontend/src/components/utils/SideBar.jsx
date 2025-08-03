@@ -18,7 +18,7 @@ export default function SideBar(){
                 <ul className="sidebar-links">
                 <li><a href="/dashboard">📊 Dashboard</a></li>
                 <li><a href="/jobs">💼 Job Board</a></li>
-                <li><a href="/teams">👥 Teams</a></li>
+                {/* <li><a href="/teams">👥 Teams</a></li> */}
                 <li><a href="/calendar">🗓️ Calendar</a></li>
                 </ul>
 

@@ -200,7 +200,7 @@ const MeetingCalendar = () => {
                 
                 <div className={styles.navigation}>
                 <button onClick={() => navigateMonth(-1)} className={styles.navButton}>
-                    <ChevronLeft size={20} />
+                    <ChevronLeft size={20} color='Black' />
                 </button>
                 
                 <h2 className={styles.monthTitle}>
@@ -208,7 +208,7 @@ const MeetingCalendar = () => {
                 </h2>
                 
                 <button onClick={() => navigateMonth(1)} className={styles.navButton}>
-                    <ChevronRight size={20} />
+                    <ChevronRight size={20} color='Black' />
                 </button>
                 </div>
             </div>
