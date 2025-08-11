@@ -6,10 +6,12 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
+from schedule.views import MeetingViewSet
 router = routers.DefaultRouter()
 router.register(r"applications", views.ApplicationApiView, basename="applications")
 router.register(r"userslist", views.UserViewSet, basename="users")
 router.register(r"applicationall", views.ApplicationsApiView, basename="allapplications")
+router.register(r"meetings", MeetingViewSet, basename="meetings")
 print(router.urls)
 
 urlpatterns = [

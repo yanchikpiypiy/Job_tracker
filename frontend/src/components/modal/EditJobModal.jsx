@@ -1,12 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Save, X, Building, MapPin, DollarSign, Calendar, Briefcase, FileText } from 'lucide-react';
-import { AuthContext } from '../context/UserContext';
 import styles from './AddJobModal.module.css'; // Reuse the same styles as AddJobModal
+import { ApplicationsContext } from '../context/ApplicationContext';
 
 const EditJobModal = ({ application, isOpen, onClose }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const { updateUserApplication } = useContext(AuthContext);
+  const { updateUserApplication } = useContext(ApplicationsContext);
   
   const [formData, setFormData] = useState({
     position: '',

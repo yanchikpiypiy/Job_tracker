@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import { authAPI, applicationsAPI } from './api';
+import { authAPI } from './api';
 export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
@@ -7,57 +7,6 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [userFetched, setUserFetched] = useState(false);
-  const [applications,setApplications] = useState([]);
-
-  // user applications logic
-  const createUserApplication = async (data) => {
-    try {
-      // Call the API to delete the application
-      const response = await applicationsAPI.createUserApplication(data);
-      console.log(response)
-      setApplications(prevApps => [...prevApps, response.data]);
-      
-      console.log("Application added successfully:", data);
-      return { success: true };
-    } catch (error) {
-      console.error("Error adding application:", error);
-      throw error;
-    }
-  };
-  const updateUserApplication = async (id, data) => {
-    try {
-      // Call the API to delete the application
-      const response = await applicationsAPI.updateUserApplication(id,data);
-      console.log(response)
-      setApplications(prevApps => 
-        prevApps.map(app => 
-          app.id === id ? { ...app, ...response.data } : app
-        )
-      );
-      console.log("Application added successfully:", data);
-      return { success: true };
-    } catch (error) {
-      console.error("Error adding application:", error);
-      throw error;
-    }
-  };
-  const deleteUserApplication = async (applicationId) => {
-    try {
-      // Call the API to delete the application
-      await applicationsAPI.deleteUserApplication(applicationId);
-      
-      // Update local state by removing the deleted application
-      setApplications(prevApps => 
-        prevApps.filter(app => app.id !== applicationId)
-      );
-      
-      console.log("Application deleted successfully:", applicationId);
-      return { success: true };
-    } catch (error) {
-      console.error("Error deleting application:", error);
-      throw error;
-    }
-  };
 
   useEffect(() => {
     const fetchUserAndApps = async () => {
@@ -75,10 +24,6 @@ export function AuthProvider({ children }) {
         const userResponse = await authAPI.getUser();
         setUser(userResponse.data);
         setUserFetched(true);
-
-        const appResponse = await applicationsAPI.getUserApplications()
-        setApplications(appResponse.data)
-        console.log("Applications fetched:", appResponse.data);
       } catch (error) {
         console.log("Error:", error);
         if (error.response?.status !== 401) {
@@ -97,7 +42,6 @@ export function AuthProvider({ children }) {
         setAuthToken(null);
         setUser(null);
         setUserFetched(false);
-        setApplications([]);
       };
 
       window.addEventListener('auth:logout', handleLogout);
@@ -126,10 +70,9 @@ export function AuthProvider({ children }) {
     setAuthToken(null);
     setUser(null);
     setUserFetched(false);
-    setApplications([]);
   }
   return (
-    <AuthContext.Provider value={{ user, authToken, login, logout, loading, applications,deleteUserApplication, createUserApplication, updateUserApplication }}>
+    <AuthContext.Provider value={{ user, authToken, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );

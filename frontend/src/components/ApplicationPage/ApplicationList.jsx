@@ -5,6 +5,7 @@ import JobRow from "./JobRow";
 import { AuthContext } from "../context/UserContext";
 import { convertor } from "../utils/applicationHelpers";
 import AddJobModal from "../modal/AddJobModal";
+import {ApplicationsContext} from "../context/ApplicationContext";
 import EditJobModal from "../modal/EditJobModal";
 /* ─── grouped mock data (unchanged) ───────────────────────────────── */
 // example of an object returned by convertor function
@@ -30,7 +31,7 @@ const mockGroups = [
 /* ─────────────────────────────────────────────────────────────────── */
 
 export default function ApplicationsList() {
-	const { applications } = useContext(AuthContext)
+	const { applications } = useContext(ApplicationsContext)
 	const grouped = convertor(applications)
 	const [collapsed, setCollapsed] = useState(
 		Object.fromEntries(grouped.map(g => [g.status, false]))

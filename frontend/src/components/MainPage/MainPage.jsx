@@ -2,9 +2,9 @@ import JobApplication from "./JobApplication";
 import Card from "./Card";
 import SideBar from "../utils/SideBar";
 import { useEffect,useState,useContext } from "react";
-import { AuthContext } from "../context/UserContext";
+import { ApplicationsContext } from "../context/ApplicationContext";
 export default function MainPage(){
-    const { applications} = useContext(AuthContext)
+    const { applications} = useContext(ApplicationsContext)
     const sliced_application = applications.slice(0,5)
     const refused = applications.filter((application) => application.status == "REFUSED")
     const interview = applications.filter((application) => application.status == "INTERVIEW")

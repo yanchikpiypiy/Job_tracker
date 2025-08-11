@@ -1,13 +1,14 @@
 import React, { useContext, useState } from 'react';
 import { Plus, X, Building, MapPin, DollarSign, Calendar, Briefcase, FileText } from 'lucide-react';
-import { AuthContext } from '../context/UserContext';
+
 import styles from './AddJobModal.module.css';
+import { ApplicationsContext } from '../context/ApplicationContext';
 
 const AddJobModal = ({ applications = [] }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const { createUserApplication } = useContext(AuthContext);
+  const { createUserApplication } = useContext(ApplicationsContext);
   
   const [formData, setFormData] = useState({
     position: '',

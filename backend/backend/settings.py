@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework.authtoken',
     'djoser',
+    'schedule.apps.ScheduleConfig',
 ]
 
 MIDDLEWARE = [

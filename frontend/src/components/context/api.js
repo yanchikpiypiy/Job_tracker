@@ -77,7 +77,8 @@ export const applicationsAPI = {
     getUserApplications: () => api.get('applications/'),
     deleteUserApplication: (id) => api.delete(`applications/${id}/`),
     createUserApplication: (data) => api.post('applications/', data),
-    updateUserApplication: (id,data) => api.put(`applications/${id}/`, data)
+    updateUserApplication: (id,data) => api.put(`applications/${id}/`, data),
+    getUserMeetings: () => api.get('meetings/')
 }
 
 export default api
