@@ -2,7 +2,6 @@
 
 A comprehensive web application to manage and track your job applications, interviews, and career progress. Features an intuitive dashboard and detailed data tables to help you stay organized throughout your job search journey.
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![React](https://img.shields.io/badge/React-18+-blue.svg)
 ![Django](https://img.shields.io/badge/Django-4+-green.svg)
 ![Python](https://img.shields.io/badge/Python-3.8+-yellow.svg)
