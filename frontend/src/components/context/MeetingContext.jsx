@@ -1,6 +1,6 @@
 // contexts/MeetingsContext.jsx
 import React, { createContext, useState, useEffect, useContext } from "react";
-import { applicationsAPI } from "./api";
+import { meetingsApi } from "./api";
 import { useAuth } from './AuthContext';
 
 const MeetingsContext = createContext();
@@ -12,6 +12,18 @@ export function MeetingsProvider({ children }) {
   const [meetings, setMeetings] = useState([]);
   
   // Meeting CRUD operations here
+    useEffect( () => {
+        
+    })
+    const getMeetings =  async () => {
+      try{
+          const response = await meetingsApi.getUserMeetings();
+          console.log("meetings", Object.keys(response.data))
+      }catch(error){
+          console.error("Error deleting application:", error);
+          setError(error.message);
+      }
+    }
   
   return (
     <MeetingsContext.Provider value={{

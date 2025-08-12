@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
-import { applicationsAPI } from './api';
+import { applicationsAPI, meetingsApi } from './api';
 import { AuthContext } from "./UserContext";
 // Create the context
 export const ApplicationsContext = createContext();
@@ -37,6 +37,7 @@ export function ApplicationsProvider({ children }) {
   useEffect(() => {
     if (authToken) {
       fetchApplications();
+      getMeetings();
     }
   }, [authToken]);
   // Create application
@@ -97,11 +98,23 @@ export function ApplicationsProvider({ children }) {
     }
   };
 
+  
+  const getMeetings =  async () => {
+    try{
+        const response = await meetingsApi.getUserMeetings();
+        console.log("meetings", Object.keys(response.data))
+    }catch(error){
+        console.error("Error deleting application:", error);
+        setError(error.message);
+    }
+  }
+
   // Clear applications (useful for logout)
   const clearApplications = () => {
     setApplications([]);
     setError(null);
   };
+
 
   // Listen for logout events to clear applications
   useEffect(() => {
