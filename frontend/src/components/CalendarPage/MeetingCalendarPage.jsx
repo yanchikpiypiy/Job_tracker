@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, Plus, Clock, MapPin, Users, X, Calendar } from 'lucide-react';
+import React, { useContext, useState } from 'react';
+import { ChevronLeft, ChevronRight, Calendar, Clock, MapPin, X } from 'lucide-react';
 import styles from './MeetingCalendar.module.css';
 import SideBar from '../utils/SideBar';
-
-
+import AddMeetingModal from '../modal/AddMeetingModal';
+import { ApplicationsContext } from '../context/ApplicationContext';
+import { transformMeetingForBackend } from '../utils/meetingHelpers';
 /* meeting object {
   "2025-08-03": [
     { "id": 1, "title": "Team Sync", "time": "10:00 AM", "type": "internal" }
@@ -13,20 +14,22 @@ import SideBar from '../utils/SideBar';
 */
 
 const MeetingCalendar = () => {
+  const {meetings, addMeeting} = useContext(ApplicationsContext)
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
-  const [meetings, setMeetings] = useState({});
   const [showAddMeeting, setShowAddMeeting] = useState(false);
   const [newMeeting, setNewMeeting] = useState({
     title: '',
     time: '',
     location: '',
     attendees: '',
-    type: 'interview',
+    meeting_type: 'interview',
     notes: ''
   });
-  console.log(meetings)
-  console.log(currentDate)
+  
+  console.log(meetings);
+  console.log(currentDate);
+  
   const monthNames = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
@@ -55,7 +58,7 @@ const MeetingCalendar = () => {
   const navigateMonth = (direction) => {
     setCurrentDate(prev => {
       const newDate = new Date(prev);
-      console.log(`${newDate} new data`)
+      console.log(`${newDate} new data`);
       newDate.setMonth(prev.getMonth() + direction);
       return newDate;
     });
@@ -85,11 +88,10 @@ const MeetingCalendar = () => {
       id: Date.now(),
       date: selectedDate
     };
-
-    setMeetings(prev => ({
-      ...prev,
-      [dateKey]: [...(prev[dateKey] || []), meetingWithId]
-    }));
+    console.log(newMeeting)
+    const value = transformMeetingForBackend(newMeeting, dateKey)
+    addMeeting(value)
+    console.log(value)
 
     // Reset form
     setNewMeeting({
@@ -97,18 +99,32 @@ const MeetingCalendar = () => {
       time: '',
       location: '',
       attendees: '',
-      type: 'interview',
+      meeting_type: 'interview',
       notes: ''
     });
     setShowAddMeeting(false);
     setSelectedDate(null);
   };
 
+  const handleCloseModal = () => {
+    setShowAddMeeting(false);
+    setSelectedDate(null);
+    // Reset form when closing
+    setNewMeeting({
+      title: '',
+      time: '',
+      location: '',
+      attendees: '',
+      meeting_type: 'interview',
+      notes: ''
+    });
+  };
+
   const deleteMeeting = (dateKey, meetingId) => {
-    setMeetings(prev => ({
-      ...prev,
-      [dateKey]: prev[dateKey].filter(meeting => meeting.id !== meetingId)
-    }));
+    // setMeetings(prev => ({
+    //   ...prev,
+    //   [dateKey]: prev[dateKey].filter(meeting => meeting.id !== meetingId)
+    // }));
   };
 
   const renderCalendarDays = () => {
@@ -168,7 +184,7 @@ const MeetingCalendar = () => {
             {dayMeetings.slice(0, 2).map(meeting => (
               <div
                 key={meeting.id}
-                className={`${styles.meetingItem} ${meetingTypes[meeting.type].cssClass}`}
+                className={`${styles.meetingItem} ${meetingTypes[meeting.meeting_type].cssClass}`}
                 title={`${meeting.title} at ${meeting.time}`}
               >
                 {meeting.time} - {meeting.title}
@@ -199,247 +215,117 @@ const MeetingCalendar = () => {
 
   return (
     <div className={styles.calendarWrapper}>
-        <SideBar></SideBar>
-        <div className={styles.calendarContainer}>
-                
-            {/* Header */}
-            <div className={styles.header}>
-                <div className={styles.headerTitle}>
-                <Calendar className={styles.calendarIcon} />
-                <h1 className={styles.mainTitle}>Meeting Calendar</h1>
-                </div>
-                
-                <div className={styles.navigation}>
-                <button onClick={() => navigateMonth(-1)} className={styles.navButton}>
-                    <ChevronLeft size={20} color='Black' />
-                </button>
-                
-                <h2 className={styles.monthTitle}>
-                    {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
-                </h2>
-                
-                <button onClick={() => navigateMonth(1)} className={styles.navButton}>
-                    <ChevronRight size={20} color='Black' />
-                </button>
-                </div>
-            </div>
+      <SideBar />
+      <div className={styles.calendarContainer}>
+        {/* Header */}
+        <div className={styles.header}>
+          <div className={styles.headerTitle}>
+            <Calendar className={styles.calendarIcon} />
+            <h1 className={styles.mainTitle}>Meeting Calendar</h1>
+          </div>
+          
+          <div className={styles.navigation}>
+            <button onClick={() => navigateMonth(-1)} className={styles.navButton}>
+              <ChevronLeft size={20} color='Black' />
+            </button>
+            
+            <h2 className={styles.monthTitle}>
+              {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
+            </h2>
+            
+            <button onClick={() => navigateMonth(1)} className={styles.navButton}>
+              <ChevronRight size={20} color='Black' />
+            </button>
+          </div>
+        </div>
 
-            {/* Legend */}
-            <div className={styles.legend}>
-                <span className={styles.legendLabel}>Meeting Types:</span>
-                {Object.entries(meetingTypes).map(([type, config]) => (
-                <div key={type} className={styles.legendItem}>
-                    <div className={`${styles.legendColor} ${config.cssClass}`}></div>
-                    <span className={styles.legendText}>{config.label}</span>
-                </div>
+        {/* Legend */}
+        <div className={styles.legend}>
+          <span className={styles.legendLabel}>Meeting Types:</span>
+          {Object.entries(meetingTypes).map(([type, config]) => (
+            <div key={type} className={styles.legendItem}>
+              <div className={`${styles.legendColor} ${config.cssClass}`}></div>
+              <span className={styles.legendText}>{config.label}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Calendar Grid */}
+        <div className={styles.calendarGrid}>
+          {/* Day headers */}
+          <div className={styles.dayHeaders}>
+            {dayNames.map(day => (
+              <div key={day} className={styles.dayHeader}>
+                {day}
+              </div>
+            ))}
+          </div>
+          
+          {/* Calendar days */}
+          <div className={styles.calendarDays}>
+            {renderCalendarDays()}
+          </div>
+        </div>
+
+        {/* Add Meeting Modal */}
+        <AddMeetingModal
+          isOpen={showAddMeeting}
+          onClose={handleCloseModal}
+          selectedDate={selectedDate}
+          newMeeting={newMeeting}
+          setNewMeeting={setNewMeeting}
+          onAddMeeting={handleAddMeeting}
+          meetingTypes={meetingTypes}
+        />
+
+        {/* Today's Meetings Section */}
+        <div className={styles.todaySection}>
+          <h3 className={styles.todaySectionTitle}>Today's Meetings</h3>
+          {(() => {
+            const today = new Date();
+            const todayKey = formatDateKey(today);
+            const todayMeetings = meetings[todayKey] || [];
+            
+            if (todayMeetings.length === 0) {
+              return <p className={styles.noMeetings}>No meetings scheduled for today</p>;
+            }
+            
+            return (
+              <div className={styles.todayMeetings}>
+                {todayMeetings.map(meeting => (
+                  <div key={meeting.id} className={styles.todayMeetingItem}>
+                    <div className={styles.todayMeetingContent}>
+                      <h4 className={styles.todayMeetingTitle}>{meeting.title}</h4>
+                      <div className={styles.todayMeetingDetails}>
+                        <span className={styles.todayMeetingDetail}>
+                          <Clock size={14} />
+                          {meeting.time}
+                        </span>
+                        {meeting.location && (
+                          <span className={styles.todayMeetingDetail}>
+                            <MapPin size={14} />
+                            {meeting.location}
+                          </span>
+                        )}
+                      </div>
+                      <span className={`${styles.todayMeetingType} ${meetingTypes[meeting.meeting_type].cssClass}`}>
+                        {meetingTypes[meeting.meeting_type].label}
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => deleteMeeting(todayKey, meeting.id)}
+                      className={styles.deleteButton}
+                    >
+                      <X size={16} />
+                    </button>
+                  </div>
                 ))}
-            </div>
-
-            {/* Calendar Grid */}
-            <div className={styles.calendarGrid}>
-                {/* Day headers */}
-                <div className={styles.dayHeaders}>
-                {dayNames.map(day => (
-                    <div key={day} className={styles.dayHeader}>
-                    {day}
-                    </div>
-                ))}
-                </div>
-                
-                {/* Calendar days */}
-                <div className={styles.calendarDays}>
-                {renderCalendarDays()}
-                </div>
-            </div>
-
-            {/* Add Meeting Modal */}
-            {showAddMeeting && (
-                <div className={styles.modalBackdrop} onClick={() => {
-                setShowAddMeeting(false);
-                setSelectedDate(null);
-                }}>
-                <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-                    <div className={styles.modalHeader}>
-                    <h3 className={styles.modalTitle}>
-                        <Plus size={20} />
-                        Add Meeting
-                    </h3>
-                    <button
-                        onClick={() => {
-                        setShowAddMeeting(false);
-                        setSelectedDate(null);
-                        }}
-                        className={styles.modalCloseButton}
-                    >
-                        <X size={20} />
-                    </button>
-                    </div>
-
-                    {selectedDate && (
-                    <p className={styles.modalDate}>
-                        {selectedDate.toLocaleDateString('en-US', { 
-                        weekday: 'long', 
-                        year: 'numeric', 
-                        month: 'long', 
-                        day: 'numeric' 
-                        })}
-                    </p>
-                    )}
-
-                    <div className={styles.formGroup}>
-                    <label className={styles.formLabel}>Meeting Title *</label>
-                    <input
-                        type="text"
-                        value={newMeeting.title}
-                        onChange={(e) => setNewMeeting(prev => ({ ...prev, title: e.target.value }))}
-                        className={styles.formInput}
-                        placeholder="e.g., Interview with Google"
-                    />
-                    </div>
-
-                    <div className={styles.formRow}>
-                    <div className={styles.formGroup}>
-                        <label className={styles.formLabel}>
-                        <span className={styles.iconLabel}>
-                            <Clock size={16} />
-                            Time *
-                        </span>
-                        </label>
-                        <input
-                        type="time"
-                        value={newMeeting.time}
-                        onChange={(e) => setNewMeeting(prev => ({ ...prev, time: e.target.value }))}
-                        className={styles.formInput}
-                        />
-                    </div>
-
-                    <div className={styles.formGroup}>
-                        <label className={styles.formLabel}>Type</label>
-                        <select
-                        value={newMeeting.type}
-                        onChange={(e) => setNewMeeting(prev => ({ ...prev, type: e.target.value }))}
-                        className={styles.formSelect}
-                        >
-                        {Object.entries(meetingTypes).map(([type, config]) => (
-                            <option key={type} value={type}>{config.label}</option>
-                        ))}
-                        </select>
-                    </div>
-                    </div>
-
-                    <div className={styles.formGroup}>
-                    <label className={styles.formLabel}>
-                        <span className={styles.iconLabel}>
-                        <MapPin size={16} />
-                        Location
-                        </span>
-                    </label>
-                    <input
-                        type="text"
-                        value={newMeeting.location}
-                        onChange={(e) => setNewMeeting(prev => ({ ...prev, location: e.target.value }))}
-                        className={styles.formInput}
-                        placeholder="e.g., Google Office, Zoom, Phone"
-                    />
-                    </div>
-
-                    <div className={styles.formGroup}>
-                    <label className={styles.formLabel}>
-                        <span className={styles.iconLabel}>
-                        <Users size={16} />
-                        Attendees
-                        </span>
-                    </label>
-                    <input
-                        type="text"
-                        value={newMeeting.attendees}
-                        onChange={(e) => setNewMeeting(prev => ({ ...prev, attendees: e.target.value }))}
-                        className={styles.formInput}
-                        placeholder="e.g., John Smith, Sarah Johnson"
-                    />
-                    </div>
-
-                    <div className={styles.formGroup}>
-                    <label className={styles.formLabel}>Notes</label>
-                    <textarea
-                        value={newMeeting.notes}
-                        onChange={(e) => setNewMeeting(prev => ({ ...prev, notes: e.target.value }))}
-                        className={styles.formTextarea}
-                        placeholder="Additional notes or preparation items..."
-                    />
-                    </div>
-
-                    <div className={styles.buttonContainer}>
-                    <button
-                        onClick={() => {
-                        setShowAddMeeting(false);
-                        setSelectedDate(null);
-                        }}
-                        className={`${styles.button} ${styles.buttonSecondary}`}
-                    >
-                        Cancel
-                    </button>
-                    <button
-                        onClick={handleAddMeeting}
-                        className={`${styles.button} ${styles.buttonPrimary}`}
-                    >
-                        <Plus size={16} />
-                        Add Meeting
-                    </button>
-                    </div>
-                </div>
-                </div>
-            )}
-
-            {/* Today's Meetings Section */}
-            <div className={styles.todaySection}>
-                <h3 className={styles.todaySectionTitle}>Today's Meetings</h3>
-                {(() => {
-                const today = new Date();
-                const todayKey = formatDateKey(today);
-                const todayMeetings = meetings[todayKey] || [];
-                
-                if (todayMeetings.length === 0) {
-                    return <p className={styles.noMeetings}>No meetings scheduled for today</p>;
-                }
-                
-                return (
-                    <div className={styles.todayMeetings}>
-                    {todayMeetings.map(meeting => (
-                        <div key={meeting.id} className={styles.todayMeetingItem}>
-                        <div className={styles.todayMeetingContent}>
-                            <h4 className={styles.todayMeetingTitle}>{meeting.title}</h4>
-                            <div className={styles.todayMeetingDetails}>
-                            <span className={styles.todayMeetingDetail}>
-                                <Clock size={14} />
-                                {meeting.time}
-                            </span>
-                            {meeting.location && (
-                                <span className={styles.todayMeetingDetail}>
-                                <MapPin size={14} />
-                                {meeting.location}
-                                </span>
-                            )}
-                            </div>
-                            <span className={`${styles.todayMeetingType} ${meetingTypes[meeting.type].cssClass}`}>
-                            {meetingTypes[meeting.type].label}
-                            </span>
-                        </div>
-                        <button
-                            onClick={() => deleteMeeting(todayKey, meeting.id)}
-                            className={styles.deleteButton}
-                        >
-                            <X size={16} />
-                        </button>
-                        </div>
-                    ))}
-                    </div>
-                );
-                })()}
-            </div>
-            </div>
+              </div>
+            );
+          })()}
+        </div>
+      </div>
     </div>
-    
   );
 };
 
