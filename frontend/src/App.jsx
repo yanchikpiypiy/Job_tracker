@@ -10,23 +10,23 @@ import AuthPage from './components/AuthPage/AuthPage'
 import { AuthProvider } from './components/context/UserContext'
 import MeetingCalendar from './components/CalendarPage/MeetingCalendarPage'
 import { ApplicationsProvider } from './components/context/ApplicationContext'
+import { MeetingsProvider } from './components/context/MeetingContext'
 function App() {
 
   return (
     <AuthProvider>
       <ApplicationsProvider>
-            <Router>
-              
-                <Routes>
-                  <Route path="dashboard" element={<MainPage></MainPage>}></Route>
-                  <Route path="jobs" element={<ApplicationsList></ApplicationsList>}></Route>
-                  <Route path="login" element={<AuthPage></AuthPage>}></Route>
-                  <Route path='calendar' element={<MeetingCalendar></MeetingCalendar>}></Route>
-                </Routes>
-              
-              
-              
-            </Router>
+        <MeetingsProvider>
+          <Router>
+                  <Routes>
+                    <Route path="dashboard" element={<MainPage></MainPage>}></Route>
+                    <Route path="jobs" element={<ApplicationsList></ApplicationsList>}></Route>
+                    <Route path="login" element={<AuthPage></AuthPage>}></Route>
+                    <Route path='calendar' element={<MeetingCalendar></MeetingCalendar>}></Route>
+                  </Routes>
+              </Router>
+        </MeetingsProvider>
+            
           
       </ApplicationsProvider>
     </AuthProvider>

@@ -17,9 +17,7 @@ export function ApplicationsProvider({ children }) {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [meetings, setMeetings] = useState([])
   const { authToken} = useContext(AuthContext);
-  console.log(meetings)
   // Fetch applications
   const fetchApplications = async () => {
     setLoading(true);
@@ -39,7 +37,6 @@ export function ApplicationsProvider({ children }) {
   useEffect(() => {
     if (authToken) {
       fetchApplications();
-      getMeetings();
     }
   }, [authToken]);
   // Create application
@@ -100,44 +97,6 @@ export function ApplicationsProvider({ children }) {
     }
   };
 
-  
-  const getMeetings =  async () => {
-    try{
-        const response = await meetingsApi.getUserMeetings();
-        console.log("meetings", response.data)
-        setMeetings(response.data)
-    }catch(error){
-        console.error("Error deleting application:", error);
-        setError(error.message);
-    }
-  }
-    const addMeeting =  async (data) => {
-    try{
-        const response = await meetingsApi.addUserMeeting(data);
-        console.log("added meetings", response.data)
-        const newMeeting = response.data;
-        const meetingDate = newMeeting.date; // assuming the meeting has a date field
-        
-        setMeetings(prev => {
-          // Create a new object to trigger re-render
-          const updatedMeetings = { ...prev };
-          
-          // If this date already exists, add to the existing array
-          if (updatedMeetings[meetingDate]) {
-            updatedMeetings[meetingDate] = [...updatedMeetings[meetingDate], newMeeting];
-          } else {
-            // If this date doesn't exist, create new array with this meeting
-            updatedMeetings[meetingDate] = [newMeeting];
-          }
-          
-          return updatedMeetings;
-        });
-    }catch(error){
-        console.error("Error deleting application:", error);
-        setError(error.message);
-    }
-  }
-
   // Clear applications (useful for logout)
   const clearApplications = () => {
     setApplications([]);
@@ -157,7 +116,6 @@ export function ApplicationsProvider({ children }) {
   // Provide context value
   const contextValue = {
     applications,
-    meetings,
     loading,
     error,
     fetchApplications,
@@ -165,7 +123,7 @@ export function ApplicationsProvider({ children }) {
     updateUserApplication,
     deleteUserApplication,
     clearApplications,
-    addMeeting,
+    
   };
 
   return (

@@ -84,6 +84,7 @@ export const applicationsAPI = {
 export const meetingsApi = {
     getUserMeetings: () => api.get('meetings/by_month/?year=2025&month=8'),
     addUserMeeting: (data) => api.post('meetings/', data),
+    deleteUserMeeting: (id) => api.delete(`meetings/${id}/`)
 }
 
 export default api
