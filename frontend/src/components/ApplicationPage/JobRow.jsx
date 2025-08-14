@@ -1,8 +1,8 @@
 import styles from "./ApplicationList.module.css";
 import { useState, useContext } from "react";
-import { AuthContext } from "../context/UserContext";
 import EditJobModal from "../modal/EditJobModal";
 import { Edit2, Trash2, Check, X } from "lucide-react";
+import { ApplicationsContext } from "../context/ApplicationContext";
 
 /**
  * One table-row in the applications grid with edit/delete actions.
@@ -17,7 +17,7 @@ import { Edit2, Trash2, Check, X } from "lucide-react";
  * onDelete     Function called when delete button is clicked
  */
 export default function JobRow({ job, squareClass, pillClass, statusText, ticks, onTickChange }) {
-  const { deleteUserApplication } = useContext(AuthContext);
+  const { deleteUserApplication } = useContext(ApplicationsContext);
   
   // editing modal logic
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);

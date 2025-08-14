@@ -7,28 +7,7 @@ import { convertor } from "../utils/applicationHelpers";
 import AddJobModal from "../modal/AddJobModal";
 import {ApplicationsContext} from "../context/ApplicationContext";
 import EditJobModal from "../modal/EditJobModal";
-/* ─── grouped mock data (unchanged) ───────────────────────────────── */
-// example of an object returned by convertor function
-const mockGroups = [
-	{
-		status: "APPLIED",
-		square: styles.greenSq,
-		pill: styles.pillGreen,
-		jobs: [
-			{
-				id: 1,
-				position: "Frontend Developer",
-				company: "Google",
-				location: "Remote (US)",
-				type: "Full-Time",
-				date: "2024-06-28",
-				salary: "$135 k",
-			},
-		],
-	}
-]
-
-/* ─────────────────────────────────────────────────────────────────── */
+import { Plus } from "lucide-react";
 
 export default function ApplicationsList() {
 	const { applications } = useContext(ApplicationsContext)
@@ -36,13 +15,21 @@ export default function ApplicationsList() {
 	const [collapsed, setCollapsed] = useState(
 		Object.fromEntries(grouped.map(g => [g.status, false]))
 	);
+	const [modalOpen, setModalOpen] = useState(false);
+	
 	// ticks logic
 	const [ticked, setTicked] = useState(
 		Object.fromEntries(grouped.map(g => [g.status, false]))
 	)
 	const [jobTicked, setJobTicked] = useState({});
 
-	// toggling all squares os the same group
+	// Calculate stats
+	const totalApplications = applications.length;
+	const appliedCount = applications.filter(app => app.status === 'APPLIED').length;
+	const interviewCount = applications.filter(app => app.status === 'INTERVIEW').length;
+	const pendingCount = applications.filter(app => app.status === 'PENDING').length;
+
+	// toggling all squares of the same group
 	function handleStatusSquare(status){
 		const newGroupTicked = !ticked[status];
 		setTicked(prev => ({ ...prev, [status]: newGroupTicked }));
@@ -56,7 +43,6 @@ export default function ApplicationsList() {
 		setJobTicked(prev => ({ ...prev, ...jobUpdates }));
 	}
 
-	
 	function handleJobTickChange(status,jobId) {
 		setTicked(prev => ({ ...prev, [status]: false }))
 		setJobTicked(prev => ({...prev, [jobId] : !prev[jobId]}))
@@ -65,14 +51,53 @@ export default function ApplicationsList() {
 	return (
 		<div className={styles.layout}>
 			<SideBar />
-			<AddJobModal></AddJobModal>
+			<AddJobModal isOpen={modalOpen} setIsOpen={setModalOpen} />
 			<div className={styles.contentMain}>
 				<div className={styles.applicationMain}>
 
-					<h2 className={styles.title}>
-						<span role="img" aria-label="clipboard">📋</span>
-						My Applications
-					</h2>
+					{/* Enhanced header section with better stats positioning */}
+					<div className={styles.headerSection}>
+						
+
+						{/* Option 2: Inline stats with title (uncomment to try this instead) */}
+						
+						<div className={styles.headerTop}>
+							<div className={styles.titleWithStats}>
+								<h2 className={styles.title}>
+									<span role="img" aria-label="clipboard">📋</span>
+									My Applications
+								</h2>
+								{totalApplications > 0 && (
+									<div className={styles.inlineStats}>
+										<div className={styles.statItem}>
+											<span className={styles.statNumber}>{totalApplications}</span>
+
+											<span>total</span>
+										</div>
+										<div className={styles.statItem}>
+											<span className={styles.statNumber}>{appliedCount}</span>
+											<span>applied</span>
+										</div>
+										{interviewCount > 0 && (
+											<div className={styles.statItem}>
+												<span className={styles.statNumber}>{interviewCount}</span>
+												<span>interviews</span>
+											</div>
+										)}
+									</div>
+								)}
+							</div>
+							
+							<button 
+								className={styles.addButton} 
+								onClick={() => setModalOpen(true)}
+							>
+								<Plus size={16} />
+								Add Application
+							</button>
+						</div>
+						
+					</div>
 
 					{grouped.map(group => (
 					  <div key={group.status}>
@@ -100,7 +125,6 @@ export default function ApplicationsList() {
 											<span className={`${styles.square} ${ticked[group.status] == true ? styles.greenSq : styles.transSq}`} >
 												{ticked[group.status] && (<img src="/check.svg" alt="Selected" className={styles.checkIcon} />)}
 											</span>
-											
 										</div>
 										<div>Name</div>
 										<div>Company</div>
@@ -108,7 +132,6 @@ export default function ApplicationsList() {
 										<div>Type</div>
 										<div>Date</div>
 										<div>Salary</div>
-										
 										<div>Status</div>
 									</div>
 
@@ -129,8 +152,6 @@ export default function ApplicationsList() {
 					))}
 				</div>
 			</div>
-		
 		</div>
-			
 	);
 }

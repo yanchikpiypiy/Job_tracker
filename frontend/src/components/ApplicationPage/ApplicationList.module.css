@@ -276,3 +276,142 @@
     transform: scale(1);
   }
 } 
+/* Header layout with better stats integration */
+.headerSection {
+  margin-bottom: 2rem;
+}
+
+.headerTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #374151;
+  margin: 0;
+}
+
+/* Softer button style that matches your preference */
+.addButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f8fafc;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  letter-spacing: -0.01em;
+}
+
+.addButton:hover {
+  background: #e2e8f0;
+  border-color: #cbd5e1;
+  color: #334155;
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+}
+
+.addButton:active {
+  background: #cbd5e1;
+  border-color: #94a3b8;
+  transform: translateY(0);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition-duration: 0.05s;
+}
+
+/* Better positioned stats bar */
+.statsBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+}
+
+.statsLeft {
+  display: flex;
+  gap: 1.5rem;
+  color: #6b7280;
+}
+
+.statsRight {
+  display: flex;
+  gap: 1rem;
+  color: #6b7280;
+  font-size: 0.8rem;
+}
+
+.statItem {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.statNumber {
+  font-weight: 600;
+  color: #374151;
+}
+
+.statLabel {
+  color: #6b7280;
+}
+
+/* Alternative: Inline stats with title */
+.titleWithStats {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.inlineStats {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.8rem;
+  color: #9ca3af;
+  font-weight: normal;
+}
+
+.inlineStats .statItem {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.inlineStats .statNumber {
+  font-weight: 600;
+  color: #6b7280;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .headerSection {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .addButton {
+    align-self: flex-end;
+    font-size: 13px;
+    padding: 9px 14px;
+  }
+}

@@ -4,8 +4,7 @@ import { Plus, X, Building, MapPin, DollarSign, Calendar, Briefcase, FileText } 
 import styles from './AddJobModal.module.css';
 import { ApplicationsContext } from '../context/ApplicationContext';
 
-const AddJobModal = ({ applications = [] }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const AddJobModal = ({ isOpen, setIsOpen }) => { // Accept props instead of managing state internally
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const { createUserApplication } = useContext(ApplicationsContext);
@@ -116,16 +115,7 @@ const AddJobModal = ({ applications = [] }) => {
 
   return (
     <>
-      {/* Floating Action Button */}
-      <button
-        onClick={() => setIsOpen(true)}
-        className={styles.fabButton}
-        title="Add New Application"
-      >
-        <Plus size={24} />
-      </button>
-
-      {/* Modal */}
+      {/* Modal - Remove the FAB button */}
       {isOpen && (
         <div className={styles.modalBackdrop} onClick={() => setIsOpen(false)}>
           <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
