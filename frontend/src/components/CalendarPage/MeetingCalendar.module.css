@@ -186,7 +186,7 @@
 
 .dayCellWithMeetings {
   border-color: #6366f1;
-  border-width: 2px;
+  border-width: 1px;
 }
 
 .dayCellInactive {
@@ -455,7 +455,6 @@
   align-items: center;
   gap: 6px;
   padding: 4px 8px;
-  background: #f8fafc;
   border-radius: 8px;
   font-weight: 500;
 }

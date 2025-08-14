@@ -303,8 +303,8 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  background: #f8fafc;
-  color: #475569;
+  background: #b5e8c0;
+  color: #323232;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
   padding: 10px 16px;
@@ -317,7 +317,7 @@
 }
 
 .addButton:hover {
-  background: #e2e8f0;
+  background: #d0e8d5;
   border-color: #cbd5e1;
   color: #334155;
   box-shadow: 
