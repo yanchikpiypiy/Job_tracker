@@ -11,6 +11,7 @@ import { AuthProvider } from './components/context/UserContext'
 import MeetingCalendar from './components/CalendarPage/MeetingCalendarPage'
 import { ApplicationsProvider } from './components/context/ApplicationContext'
 import { MeetingsProvider } from './components/context/MeetingContext'
+import Documents from './components/DocumentsPage/Documents'
 function App() {
 
   return (
@@ -23,6 +24,7 @@ function App() {
                     <Route path="jobs" element={<ApplicationsList></ApplicationsList>}></Route>
                     <Route path="login" element={<AuthPage></AuthPage>}></Route>
                     <Route path='calendar' element={<MeetingCalendar></MeetingCalendar>}></Route>
+                    <Route path='documents' element={<Documents></Documents>}> </Route>
                   </Routes>
               </Router>
         </MeetingsProvider>

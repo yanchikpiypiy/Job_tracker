@@ -1,4 +1,4 @@
-export default function Card({title, count, icon_name}){
+export default function Card({title, count, icon_name, onView,onAddOffer }){
     const statusClassMap = {
     "Applied": 'applied-card',
     "Refused": 'refused-card',
@@ -8,10 +8,10 @@ export default function Card({title, count, icon_name}){
     };
     let extraComponents = ""
     if (title == "Offers"){
-        extraComponents = <button className="add-offer">+ Add Offer</button>
+        extraComponents = <button className="add-offer" onClick={onAddOffer}>+ Add Offer</button>
     }
     else if (title == "Interviews") {
-        extraComponents = <button className="view-interviews">View</button>
+        extraComponents = <a href="/jobs" className="view-interviews">See applications</a>
     }
     return (
         <div className={`card ${statusClassMap[title]}`}>

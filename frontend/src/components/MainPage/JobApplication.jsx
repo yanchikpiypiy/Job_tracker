@@ -5,7 +5,8 @@ export default function JobApplication({
   work_type,
   application_date,
   salary,
-  application_tag
+  application_tag,
+  onView,
 }) {
   return (
     <div className="application">
@@ -15,7 +16,9 @@ export default function JobApplication({
       <div className="work-type">{work_type}</div>
       <div className="application-date">{application_date}</div>
       <div className="salary">{salary}</div>
-      <a href="/">View</a>
+      <span className="view" onClick={onView}>
+          View
+      </span>
       <div className={`application-tag ${application_tag.toLowerCase()}`}>
         {application_tag}
       </div>
