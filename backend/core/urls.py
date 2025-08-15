@@ -7,11 +7,13 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 from schedule.views import MeetingViewSet
+from documents.views import DocumentViewSet
 router = routers.DefaultRouter()
 router.register(r"applications", views.ApplicationApiView, basename="applications")
 router.register(r"userslist", views.UserViewSet, basename="users")
 router.register(r"applicationall", views.ApplicationsApiView, basename="allapplications")
 router.register(r"meetings", MeetingViewSet, basename="meetings")
+router.register(r'documents', DocumentViewSet, basename='document')
 print(router.urls)
 
 urlpatterns = [
