@@ -60,7 +60,8 @@
 /* Documents Grid */
 .documentsGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    justify-content: start; /* align grid to start, not stretch */
     gap: 1.5rem;
     width: 100%;
 }
@@ -72,6 +73,7 @@
     box-shadow: rgba(45, 35, 66, 0.4) 0 4px 20px, rgba(45, 35, 66, 0.3) 0 4px 13px -3px, rgb(205, 205, 205) 0 -5px 0 inset;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
+    max-width: 400px;
 }
 
 .documentCard:hover {

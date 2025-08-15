@@ -1,8 +1,4 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import SideBar from './components/utils/SideBar'
 import MainPage from './components/MainPage/MainPage'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ApplicationsList from './components/ApplicationPage/ApplicationList'
@@ -11,6 +7,7 @@ import { AuthProvider } from './components/context/UserContext'
 import MeetingCalendar from './components/CalendarPage/MeetingCalendarPage'
 import { ApplicationsProvider } from './components/context/ApplicationContext'
 import { MeetingsProvider } from './components/context/MeetingContext'
+import { DocumentsProvider } from './components/context/DocumentContext';
 import Documents from './components/DocumentsPage/Documents'
 function App() {
 
@@ -18,18 +15,19 @@ function App() {
     <AuthProvider>
       <ApplicationsProvider>
         <MeetingsProvider>
-          <Router>
-                  <Routes>
-                    <Route path="dashboard" element={<MainPage></MainPage>}></Route>
-                    <Route path="jobs" element={<ApplicationsList></ApplicationsList>}></Route>
-                    <Route path="login" element={<AuthPage></AuthPage>}></Route>
-                    <Route path='calendar' element={<MeetingCalendar></MeetingCalendar>}></Route>
-                    <Route path='documents' element={<Documents></Documents>}> </Route>
-                  </Routes>
-              </Router>
-        </MeetingsProvider>
-            
+          <DocumentsProvider>
+            <Router>
+              <Routes>
+                <Route path="dashboard" element={<MainPage></MainPage>}></Route>
+                <Route path="jobs" element={<ApplicationsList></ApplicationsList>}></Route>
+                <Route path="login" element={<AuthPage></AuthPage>}></Route>
+                <Route path='calendar' element={<MeetingCalendar></MeetingCalendar>}></Route>
+                <Route path='documents' element={<Documents></Documents>}> </Route>
+              </Routes>
+            </Router>
           
+          </DocumentsProvider>
+        </MeetingsProvider>
       </ApplicationsProvider>
     </AuthProvider>
    

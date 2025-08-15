@@ -20,10 +20,10 @@ class DocumentSerializer(serializers.ModelSerializer):
                 return request.build_absolute_uri(obj.actual_file.url)
         return None
     
-    def validate_file(self, value):
+    def validate_actual_file(self, value):
         """Validate uploaded file"""
-        # Check file size (10MB limit)
-        if value.size > 10 * 1024 * 1024:
+        # Check file size (50MB limit)
+        if value.size > 50 * 1024 * 1024:
             raise serializers.ValidationError("File size cannot exceed 10MB.")
         
         # Check file extension

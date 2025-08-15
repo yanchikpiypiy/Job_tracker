@@ -87,4 +87,19 @@ export const meetingsApi = {
     deleteUserMeeting: (id) => api.delete(`meetings/${id}/`)
 }
 
+export const documentsAPI = {
+    getUserDocuments: () => api.get('documents/'),
+    uploadUserDocument: (formData, options = {}) => {
+        return api.post('documents/', formData, {
+                headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+            timeout: 20000,
+            ...options
+        });
+    },
+    deleteUserDocument: (id) => api.delete(`documents/${id}/`),
+    downloadUserDocument: (id) => api.get(`documents/${id}/download/`)
+}
+
 export default api
