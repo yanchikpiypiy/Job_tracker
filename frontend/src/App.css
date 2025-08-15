@@ -464,7 +464,12 @@ body{
   
 }
 
-
+.application-header div:nth-child(2){
+  text-align: center;
+}
+.application div:nth-child(2){
+  text-align: center;
+}
 .application-header div:nth-child(8){
   text-align: center;
 }
