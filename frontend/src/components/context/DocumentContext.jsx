@@ -69,9 +69,9 @@ export const DocumentsProvider = ({ children }) => {
     }, []);
 
 
-    const downloadDocument = useCallback(async (id) => {
+    const downloadDocument = useCallback(async (doc) => {
         try {
-            const response = await documentsAPI.downloadUserDocument(id, { responseType: 'blob' });
+            const response = await documentsAPI.downloadUserDocument(doc.id, { responseType: 'blob' });
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const link = document.createElement('a');
             link.href = url;

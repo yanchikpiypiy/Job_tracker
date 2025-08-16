@@ -136,7 +136,7 @@ const Documents = () => {
                                 <div className={styles.cardHeader}>
                                     <div className={styles.documentIcon}><IconComponent size={28} /></div>
                                     <div className={styles.cardActions}>
-                                        <button className={styles.actionBtn} title="Download" onClick={() => downloadDocument(doc.id)}><Download size={18}/></button>
+                                        <button className={styles.actionBtn} title="Download" onClick={() => downloadDocument(doc)}><Download size={18}/></button>
                                         <button className={styles.actionBtn} title="Delete" onClick={() => deleteDocument(doc.id)}><Trash2 size={18}/></button>
                                     </div>
                                 </div>
