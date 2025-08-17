@@ -49,7 +49,6 @@ export function AuthProvider({ children }) {
     }, []);
   
   async function login(credentials){
-    try {
       const response = await authAPI.login(credentials)
       const { access, refresh } = response.data;
       
@@ -59,10 +58,7 @@ export function AuthProvider({ children }) {
       setUserFetched(false); // Reset to trigger useEffect
 
       return response.data;
-    } catch (error) {
-      throw error;
-    }
-
+    
   }
   function logout() {
     localStorage.removeItem("access_token");
