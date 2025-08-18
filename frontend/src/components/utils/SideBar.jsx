@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/UserContext";
 import { 
     User, 
@@ -16,7 +17,7 @@ import {
 export default function SideBar(){
     const {user} = useContext(AuthContext)
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
+    const navigate = useNavigate();
     return (
         <aside className="sidebar-main">
             <div className="sidebar-top">
@@ -47,19 +48,10 @@ export default function SideBar(){
                     {/* Dropdown Menu */}
                     {isDropdownOpen && (
                         <div className="profile-dropdown">
-                            <div className="dropdown-item" onClick={() => {/* Navigate to profile */}}>
+                           <div className="dropdown-item" onClick={() => { navigate("/profile") }}>
                                 <User className="dropdown-icon" size={16} />
                                 <span>My Profile</span>
                             </div>
-                            <div className="dropdown-item" onClick={() => {/* Toggle notifications */}}>
-                                <Bell className="dropdown-icon" size={16} />
-                                <span>Notifications</span>
-                            </div>
-                            <div className="dropdown-item" onClick={() => {/* Toggle theme */}}>
-                                <Moon className="dropdown-icon" size={16} />
-                                <span>Dark Mode</span>
-                            </div>
-                            <hr className="dropdown-divider" />
                             <div className="dropdown-item logout" onClick={() => {/* Logout function */}}>
                                 <LogOut className="dropdown-icon" size={16} />
                                 <span>Logout</span>
