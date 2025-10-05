@@ -1,28 +1,28 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/UserContext";
-import { 
-    User, 
-    Bell, 
-    Moon, 
-    LogOut, 
-    BarChart3, 
-    Briefcase, 
-    Calendar, 
-    FileText, 
+import {
+    User,
+    Bell,
+    Moon,
+    LogOut,
+    BarChart3,
+    Briefcase,
+    Calendar,
+    FileText,
     Settings,
     ChevronDown
 } from "lucide-react";
 
-export default function SideBar(){
-    const {user} = useContext(AuthContext)
+export default function SideBar() {
+    const { user } = useContext(AuthContext)
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const navigate = useNavigate();
     return (
         <aside className="sidebar-main">
             <div className="sidebar-top">
-                <div className="profile-section" style={{position: 'relative'}}>
-                    <img src="public/Io_icon.png" className="profile-img" alt="Profile image"></img>
+                <div className="profile-section" style={{ position: 'relative' }}>
+                    <img src={`${user?.profile_image}`} className="profile-img" alt="Profile image"></img>
                     <div className="profile-info">
                         <span className="profile-name">{user?.username}</span>
                         <span className="profile-status">Online</span>
@@ -48,11 +48,11 @@ export default function SideBar(){
                     {/* Dropdown Menu */}
                     {isDropdownOpen && (
                         <div className="profile-dropdown">
-                           <div className="dropdown-item" onClick={() => { navigate("/profile") }}>
+                            <div className="dropdown-item" onClick={() => { navigate("/profile") }}>
                                 <User className="dropdown-icon" size={16} />
                                 <span>My Profile</span>
                             </div>
-                            <div className="dropdown-item logout" onClick={() => {/* Logout function */}}>
+                            <div className="dropdown-item logout" onClick={() => {/* Logout function */ }}>
                                 <LogOut className="dropdown-icon" size={16} />
                                 <span>Logout</span>
                             </div>
@@ -62,22 +62,22 @@ export default function SideBar(){
 
                 <ul className="sidebar-links">
                     <li>
-                        <a href="/dashboard" style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
+                        <a href="/dashboard" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                             <BarChart3 size={16} /> Dashboard
                         </a>
                     </li>
                     <li>
-                        <a href="/jobs" style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
+                        <a href="/jobs" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                             <Briefcase size={16} /> Job Board
                         </a>
                     </li>
                     <li>
-                        <a href="/calendar" style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
+                        <a href="/calendar" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                             <Calendar size={16} /> Calendar
                         </a>
                     </li>
                     <li>
-                        <a href="/documents" style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
+                        <a href="/documents" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                             <FileText size={16} /> Documents
                         </a>
                     </li>
@@ -85,7 +85,7 @@ export default function SideBar(){
             </div>
 
             <div className="sidebar-footer">
-                <a href="/settings" style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
+                <a href="/settings" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <Settings size={16} /> Settings
                 </a>
             </div>

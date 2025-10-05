@@ -349,3 +349,8 @@
     margin-bottom: 16px;
     font-size: 14px;
 }
+
+.buttonGroup {
+    display: flex;
+    gap: 12px;
+}

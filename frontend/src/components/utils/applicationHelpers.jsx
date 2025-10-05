@@ -1,4 +1,5 @@
 import styles from "../ApplicationPage/ApplicationList.module.css";
+
 export function convertor(array) {
     const statusStyles = {
         "APPLIED": {
@@ -14,11 +15,11 @@ export function convertor(array) {
             pill: styles.pillRed,
         },
         "INTERVIEW": {
-            square: styles.greenSq,   // Or use a new color like styles.blueSq if defined
-            pill: styles.pillGreen,   // Or define a new `pillBlue` for visual distinction
+            square: styles.greenSq,
+            pill: styles.pillGreen,
         },
     };
-    
+
     const grouped = {};
     array.forEach(app => {
         const status = app.status?.toUpperCase() || "UNKNOWN";
@@ -26,14 +27,30 @@ export function convertor(array) {
             grouped[status] = [];
         }
 
+        // Safe date formatting
+        let formattedDate = "N/A";
+        if (app.date_applied) {
+            try {
+                formattedDate = app.date_applied.split('T')[0];
+            } catch (e) {
+                formattedDate = "N/A";
+            }
+        }
+
+        // Safe salary formatting
+        let formattedSalary = "N/A";
+        if (app.salary !== null && app.salary !== undefined) {
+            formattedSalary = `$${app.salary.toLocaleString()}`;
+        }
+
         grouped[status].push({
             id: app.id,
-            company: app.company,
-            position: app.position,
-            location: app.location,
-            type: app.job_type,
-            date: app.date_applied.split('T')[0], // Format: "2025-07-14"
-            salary: `$${app.salary.toLocaleString()}`, // Format: "$30,000"
+            company: app.company || "N/A",
+            position: app.position || "N/A",
+            location: app.location || "N/A",
+            type: app.job_type || "N/A",
+            date: formattedDate,
+            salary: formattedSalary,
         })
     })
 
