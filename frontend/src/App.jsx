@@ -12,29 +12,29 @@ import Documents from './components/DocumentsPage/Documents'
 import ProfilePage from './components/ProfilePage/ProfilePage';
 function App() {
 
-  return (
-    <AuthProvider>
-      <ApplicationsProvider>
-        <MeetingsProvider>
-          <DocumentsProvider>
-            <Router>
-              <Routes>
-                <Route path="dashboard" element={<MainPage></MainPage>}></Route>
-                <Route path="jobs" element={<ApplicationsList></ApplicationsList>}></Route>
-                <Route path="login" element={<AuthPage></AuthPage>}></Route>
-                <Route path='calendar' element={<MeetingCalendar></MeetingCalendar>}></Route>
-                <Route path='documents' element={<Documents></Documents>}> </Route>
-		<Route path='profile' element={<ProfilePage></ProfilePage>}> </Route>
-              </Routes>
-            </Router>
-          
-          </DocumentsProvider>
-        </MeetingsProvider>
-      </ApplicationsProvider>
-    </AuthProvider>
-   
-    
-  )
+    return (
+        <AuthProvider>
+            <ApplicationsProvider>
+                <MeetingsProvider>
+                    <DocumentsProvider>
+                        <Router>
+                            <Routes>
+                                <Route path="dashboard" element={<MainPage></MainPage>}></Route>
+                                <Route path="jobs" element={<ApplicationsList></ApplicationsList>}></Route>
+                                <Route path="" element={<AuthPage></AuthPage>}></Route>
+                                <Route path='calendar' element={<MeetingCalendar></MeetingCalendar>}></Route>
+                                <Route path='documents' element={<Documents></Documents>}> </Route>
+                                <Route path='profile' element={<ProfilePage></ProfilePage>}> </Route>
+                            </Routes>
+                        </Router>
+
+                    </DocumentsProvider>
+                </MeetingsProvider>
+            </ApplicationsProvider>
+        </AuthProvider>
+
+
+    )
 }
 
 export default App

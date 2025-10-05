@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import User, Application
+
 # serializers.py
 from rest_framework import exceptions
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -10,37 +11,59 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+
 class EmailTokenObtainPairSerializer(TokenObtainPairSerializer):
-    username_field = 'email'
+    username_field = "email"
 
     def validate(self, attrs):
-        credentials = {
-            'email': attrs.get('email'),
-            'password': attrs.get('password')
-        }
+        credentials = {"email": attrs.get("email"), "password": attrs.get("password")}
 
         user = authenticate(**credentials)
 
         if user:
             if not user.is_active:
-                raise exceptions.AuthenticationFailed('User is deactivated')
+                raise exceptions.AuthenticationFailed("User is deactivated")
 
             data = {}
             refresh = self.get_token(user)
 
-            data['refresh'] = str(refresh)
-            data['access'] = str(refresh.access_token)
+            data["refresh"] = str(refresh)
+            data["access"] = str(refresh.access_token)
 
             return data
         else:
-            raise exceptions.AuthenticationFailed('No active account found with the given credentials')
+            raise exceptions.AuthenticationFailed(
+                "No active account found with the given credentials"
+            )
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'first_name', 'last_name']
+        fields = [
+            "id",
+            "username",
+            "email",
+            "phone",
+            "location",
+            "bio",
+            "title",
+            "company",
+            "experience",
+            "education",
+            "skills",
+            "profile_image",
+            "created_at",
+            "updated_at",
+        ]
+        read_only_fields = ["id", "email", "created_at", "updated_at"]
 
+    def update(self, instance, validated_data):
+        # Update only the fields that are provided
+        for field, value in validated_data.items():
+            setattr(instance, field, value)
+        instance.save()
+        return instance
 
 
 class ApplicationSerializer(serializers.ModelSerializer):
@@ -48,3 +71,4 @@ class ApplicationSerializer(serializers.ModelSerializer):
         model = Application
         exclude = ["created_at", "updated_at", "user"]
         read_only_fields = ["user"]
+
