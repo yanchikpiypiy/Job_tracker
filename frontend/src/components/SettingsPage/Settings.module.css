@@ -1,0 +1,229 @@
+.layout {
+    width: 100%;
+    height: 100vh;
+    background-color: var(--color-bg);
+}
+
+.contentMain {
+    width: auto;
+    height: 100%;
+    margin-left: 240px;
+    border-top-left-radius: 24px;
+    background-color: var(--color-surface);
+    padding: 40px;
+}
+
+.settingsContainer {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.settingsHeader {
+    margin-bottom: 2rem;
+}
+
+.settingsTitle {
+    font-size: var(--font-xl);
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.settingsSubtitle {
+    color: var(--color-muted);
+    font-size: var(--font-base);
+}
+
+.settingsSection {
+    background: var(--color-surface);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 8px, rgba(45, 35, 66, 0.3) 0 4px 13px -3px, rgb(205, 205, 205) 0 -3px 0 inset;
+}
+
+.sectionTitle {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.sectionTitle h2 {
+    font-size: var(--font-md);
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.sectionTitle svg {
+    color: var(--color-accent);
+}
+
+.settingItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.settingItem:last-child {
+    border-bottom: none;
+}
+
+.settingInfo h3 {
+    font-size: var(--font-base);
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 0.25rem;
+}
+
+.settingInfo p {
+    font-size: var(--font-sm);
+    color: var(--color-muted);
+}
+
+/* Toggle Switch */
+.toggleSwitch {
+    position: relative;
+    display: inline-block;
+    width: 52px;
+    height: 28px;
+    flex-shrink: 0;
+}
+
+.toggleSwitch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggleSlider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-border);
+    transition: 0.3s;
+    border-radius: 28px;
+}
+
+.toggleSlider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.3s;
+    border-radius: 50%;
+}
+
+.toggleSwitch input:checked+.toggleSlider {
+    background-color: var(--color-accent);
+}
+
+.toggleSwitch input:checked+.toggleSlider:before {
+    transform: translateX(24px);
+}
+
+/* Button Settings Items */
+.settingItemButton {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.settingItemButton:last-child {
+    border-bottom: none;
+}
+
+.settingsBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    border-radius: 8px;
+    font-size: var(--font-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.settingsBtn.primary {
+    background-color: var(--color-accent);
+    color: white;
+}
+
+.settingsBtn.primary:hover {
+    background-color: #8a4dd4;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(155, 93, 229, 0.3);
+}
+
+.settingsBtn.danger {
+    background-color: var(--neon-red);
+    color: white;
+}
+
+.settingsBtn.danger:hover {
+    background-color: #c71847;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3);
+}
+
+/* Danger Zone */
+.dangerSection {
+    border: 2px solid var(--neon-red);
+    background-color: rgba(225, 29, 72, 0.05);
+}
+
+.dangerSection .sectionTitle svg {
+    color: var(--neon-red);
+}
+
+.dangerSection .sectionTitle {
+    border-bottom-color: rgba(225, 29, 72, 0.2);
+}
+
+/* Save Button */
+.settingsFooter {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2rem;
+}
+
+.saveButton {
+    padding: 0.875rem 2.5rem;
+    background-color: var(--color-accent);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: var(--font-base);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, var(--color-surface) 0 -3px 0 inset;
+}
+
+.saveButton:hover {
+    background-color: #8a4dd4;
+    transform: translateY(-2px);
+    box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, var(--color-accent2) 0 -3px 0 inset;
+}
+
+.saveButton:active {
+    transform: translateY(2px);
+    box-shadow: rgba(45, 35, 66, 0.4) 0 1px 2px inset;
+}
