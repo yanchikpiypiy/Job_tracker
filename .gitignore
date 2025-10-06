@@ -44,6 +44,8 @@ frontend/dist/
 .DS_Store
 Thumbs.db
 
+# my stuff
+backend/media/
 # IDEs
 .vscode/
 .idea/
